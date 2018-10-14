@@ -6,11 +6,11 @@ const fs = require('fs')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
-function resolve(dir) {
+function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-function getPages() {
+function getPages () {
   let vues = []
   glob.sync(resolve('src/pages/**/*.vue')).forEach((pathname) => {
     vues.push(pathname.replace(/[\w|\W|\s|\S]*\/src\/pages\/|\.\w*$/g, ''))
@@ -18,7 +18,7 @@ function getPages() {
   return vues
 }
 
-function createEntries() {
+function createEntries () {
   const jsTempPath = 'node_modules/.temp'
   const pages = getPages()
   const tempLateJsContent = fs.readFileSync(resolve('src/main.js')).toString()
@@ -51,9 +51,9 @@ let configBase = {
   output: {
     path: config.build.assetsRoot,
     filename: utils.assetsPath('[name].js'),
-    publicPath: process.env.NODE_ENV === 'production' ?
-      config.build.assetsPublicPath :
-      config.dev.assetsPublicPath
+    publicPath: process.env.NODE_ENV === 'production'
+      ? config.build.assetsPublicPath
+      : config.dev.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -125,7 +125,7 @@ let configBase = {
   }
 }
 
-function getHtmls() {
+function getHtmls () {
   const pages = getPages()
   const chunks = [...pages]
   pages.forEach((pathname) => {
