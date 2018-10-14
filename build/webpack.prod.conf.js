@@ -25,7 +25,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath('js/[name].[chunkhash].js'),
+    filename: utils.assetsPath('js/[name].[chunkhash].js')
     // chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   optimization: {
@@ -44,7 +44,7 @@ const webpackConfig = merge(baseWebpackConfig, {
           chunks: 'all'
         }
       }
-    },
+    }
     // minimize: false
   },
   plugins: [
@@ -65,7 +65,6 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
     // keep module.id stable when vendor modules does not change
     // new webpack.HashedModuleIdsPlugin(),
-   
     // copy custom static assets
     new CopyWebpackPlugin([
       {

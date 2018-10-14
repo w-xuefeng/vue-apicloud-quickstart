@@ -1,37 +1,37 @@
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
-const glob = require('glob');
-const fs = require('fs');
+const glob = require('glob')
+const fs = require('fs')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
 function getPages() {
-  let vues = [];
+  let vues = []
   glob.sync(resolve('src/pages/**/*.vue')).forEach((pathname) => {
-    vues.push(pathname.replace(/[\w|\W|\s|\S]*\/src\/pages\/|\.\w*$/g, ''));
-  });
-  return vues;
+    vues.push(pathname.replace(/[\w|\W|\s|\S]*\/src\/pages\/|\.\w*$/g, ''))
+  })
+  return vues
 }
 
 function createEntries() {
-  const jsTempPath = 'node_modules/.temp';
-  const pages = getPages();
-  const tempLateJsContent = fs.readFileSync(resolve('src/main.js')).toString();
-  const tempLateHtmlContent = fs.readFileSync(resolve('index.html')).toString();
+  const jsTempPath = 'node_modules/.temp'
+  const pages = getPages()
+  const tempLateJsContent = fs.readFileSync(resolve('src/main.js')).toString()
+  const tempLateHtmlContent = fs.readFileSync(resolve('index.html')).toString()
   if (!fs.existsSync(resolve(jsTempPath))) {
     fs.mkdirSync(resolve(jsTempPath))
   }
-  fs.writeFileSync(resolve(`${jsTempPath}/index.html`), tempLateHtmlContent.replace(/<script\sid=\"apiIndex\">[\s\S]*<\/script>/, ''));
+  fs.writeFileSync(resolve(`${jsTempPath}/index.html`), tempLateHtmlContent.replace(/<script\sid="apiIndex">[\s\S]*<\/script>/, ''))
   return pages.reduce((result, page) => {
-    const jsFileName = `${jsTempPath}/${page.replace(/\/(\w)/, (match, $1)=> $1.toLocaleUpperCase())}`;
-    fs.writeFileSync(`${jsFileName}.js`, tempLateJsContent.replace(/\'(.*?)\'/, `'@/pages/${page}'`));
-    result[page] = resolve(`${jsFileName}.js`);
-    return result;
+    const jsFileName = `${jsTempPath}/${page.replace(/\/(\w)/, (match, $1) => $1.toLocaleUpperCase())}`
+    fs.writeFileSync(`${jsFileName}.js`, tempLateJsContent.replace(/'(.*?)'/, `'@/pages/${page}'`))
+    result[page] = resolve(`${jsFileName}.js`)
+    return result
   }, {})
 }
 const createLintingRule = () => ({
@@ -45,21 +45,21 @@ const createLintingRule = () => ({
   }
 })
 
-let config_base = {
+let configBase = {
   context: path.resolve(__dirname, '../'),
   entry: createEntries(),
   output: {
     path: config.build.assetsRoot,
     filename: utils.assetsPath('[name].js'),
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: process.env.NODE_ENV === 'production' ?
+      config.build.assetsPublicPath :
+      config.dev.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
+      '@': resolve('src')
     }
   },
   module: {
@@ -125,22 +125,22 @@ let config_base = {
   }
 }
 
-function getHtmls () {
-  const pages = getPages();
-  const chunks = [...pages];
+function getHtmls() {
+  const pages = getPages()
+  const chunks = [...pages]
   pages.forEach((pathname) => {
-    let fileBasename = pathname.replace(/\/(\w)/, (match, $1) => $1.toLocaleUpperCase());
+    let fileBasename = pathname.replace(/\/(\w)/, (match, $1) => $1.toLocaleUpperCase())
     let conf = {
-      filename: `${fileBasename}.html`, //生成的html存放路径，相对于path
-      template: resolve('node_modules/.temp/index.html'), //html模板路径
-    };
-    let chunk = pathname;
+      filename: `${fileBasename}.html`, // 生成的html存放路径，相对于path
+      template: resolve('node_modules/.temp/index.html') // html模板路径
+    }
+    let chunk = pathname
     if (chunks.indexOf(chunk) > -1) {
-      conf.inject = 'body';
-      conf.chunks = ['common', chunk];
+      conf.inject = 'body'
+      conf.chunks = ['common', chunk]
     }
     if (process.env.NODE_ENV === 'production') {
-      conf.hash = true;
+      conf.hash = true
       conf.minify = {
         removeComments: true,
         collapseWhitespace: true,
@@ -149,10 +149,9 @@ function getHtmls () {
         // https://github.com/kangax/html-minifier#options-quick-reference
       }
     }
-    console.log(conf);
-    config_base.plugins.push(new HtmlWebpackPlugin(conf));
-  });
+    configBase.plugins.push(new HtmlWebpackPlugin(conf))
+  })
 }
-getHtmls();
+getHtmls()
 
-module.exports = config_base;
+module.exports = configBase
