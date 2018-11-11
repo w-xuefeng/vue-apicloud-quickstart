@@ -31,6 +31,7 @@ function copyFile() {
   source.forEach(e => fs.copyFileSync(e.path, `${TO}${e.name}`))
   fs.copyFileSync(CONFIGXML, `${TO}/config.xml`)
   fs.writeFileSync(`${TO}/index.html`, fs.readFileSync(INDEXFILE).toString().replace(/url:[\S\s]*\/[\W\w]*\.html/, (match) => `${match.replace(/http:\/\/[\W\w]*:\d+\//, '/dist/')}`))
+  console.log(`Generate widget complete.`)
 }
 
 function generate() {
@@ -59,7 +60,6 @@ function generate() {
     });
   } else {
     copyFile()
-  }
-  console.log(`Generate widget complete.`)
+  }  
 }
 generate()
