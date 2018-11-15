@@ -28,7 +28,7 @@ function createEntries () {
   }
   fs.writeFileSync(resolve(`${jsTempPath}/index.html`), tempLateHtmlContent.replace(/<script\sid="apiIndex">[\s\S]*<\/script>/, ''))
   return pages.reduce((result, page) => {
-    const jsFileName = `${jsTempPath}/${page.replace(/\/(\w)/, (match, $1) => $1.toLocaleUpperCase())}`
+    const jsFileName = `${jsTempPath}/${page.replace(/\/(\w)/, (match, $1) => $1.toLocaleLowerCase())}`
     fs.writeFileSync(`${jsFileName}.js`, tempLateJsContent.replace(/'(.*?)'/, `'@/pages/${page}'`))
     result[page] = resolve(`${jsFileName}.js`)
     return result
@@ -129,7 +129,7 @@ function getHtmls () {
   const pages = getPages()
   const chunks = [...pages]
   pages.forEach((pathname) => {
-    let fileBasename = pathname.replace(/\/(\w)/, (match, $1) => $1.toLocaleUpperCase())
+    let fileBasename = pathname.replace(/\/(\w)/, (match, $1) => $1.toLocaleLowerCase())
     let conf = {
       filename: `${fileBasename}.html`, // 生成的html存放路径，相对于path
       template: resolve('node_modules/.temp/index.html') // html模板路径

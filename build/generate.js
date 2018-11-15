@@ -30,7 +30,8 @@ function copyFile() {
   dir.forEach(e => fs.mkdirSync(`${TO}${e}`))
   source.forEach(e => fs.copyFileSync(e.path, `${TO}${e.name}`))
   fs.copyFileSync(CONFIGXML, `${TO}/config.xml`)
-  fs.writeFileSync(`${TO}/index.html`, fs.readFileSync(INDEXFILE).toString().replace(/url:[\S\s]*\/[\W\w]*\.html/, (match) => `${match.replace(/http:\/\/[\W\w]*:\d+\//, '/dist/')}`))
+  fs.renameSync(`${TO}/dist`, `${TO}/html`)
+  fs.writeFileSync(`${TO}/index.html`, fs.readFileSync(INDEXFILE).toString().replace(/url:[\S\s]*\/[\W\w]*\.html/, (match) => `${match.replace(/http:\/\/[\W\w]*:\d+\//, 'html/')}`))
   console.log(`Generate widget complete.`)
 }
 
@@ -60,6 +61,6 @@ function generate() {
     });
   } else {
     copyFile()
-  }  
+  }
 }
 generate()
