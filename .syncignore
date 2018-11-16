@@ -1,1 +1,1 @@
-{**/*.js.map,**/node_modules/**,src/**,package.json,package-lock.json,**/build/**,**/config/**,**/static/**,**/test/**,**/widget/**,postcss.config.js,README.md}
+{**/*.js.map,**/node_modules/**,src/**,package.json,package-lock.json,**/build/**,**/config/**,**/static/**,**/test/**,**/widget/**,**/dist/**,postcss.config.js,README.md}

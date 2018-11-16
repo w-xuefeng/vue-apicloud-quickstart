@@ -3,6 +3,14 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const glob = require('glob')
+function getHtmlName() {
+  let html = []
+  glob.sync(path.resolve(__dirname, '../node_modules/.temp/*.js')).forEach((pathname) => {
+    html.push(path.resolve(__dirname, pathname.replace(/[\S\s]*\/.temp/g, '../dist').replace(/\.js$/, '.html')))
+  })
+  return html
+}
 
 module.exports = {
   dev: {
@@ -45,12 +53,12 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/index.html'),
+    index: getHtmlName(),
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

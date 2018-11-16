@@ -12,6 +12,16 @@ const INDEXFILE = resolve('index.html')
 const CONFIGXML = resolve('config.xml')
 const TO = resolve('widget')
 
+
+function insertVendor() {
+  const cssVendor = `<link href=./static/css/vendor.css rel=stylesheet>`
+  const jsVendor = `<script type=text/javascript src=./static/js/vendor.js></script>`
+  glob.sync(`${FROME}/*.html`).forEach((pathname) => {
+    let tempContent = fs.readFileSync(pathname).toString();
+    fs.writeFileSync(pathname, tempContent.replace(/<link/, `${cssVendor}<link`).replace(/<script/, `${jsVendor}<script`))
+  })
+}
+
 function getSource () {
   let source = []
   let dir = []
@@ -26,6 +36,7 @@ function getSource () {
 }
 
 function copyFile() {
+  insertVendor()
   let { source, dir } = getSource()
   dir.forEach(e => fs.mkdirSync(`${TO}${e}`))
   source.forEach(e => fs.copyFileSync(e.path, `${TO}${e.name}`))
