@@ -9,10 +9,28 @@ const path = require('path')
 const chalk = require('chalk')
 const webpack = require('webpack')
 const config = require('../config')
+const glob = require('glob')
+const fs = require('fs')
 const webpackConfig = require('./webpack.prod.conf')
 
 const spinner = ora('building for production...')
 spinner.start()
+const TO = path.join(__dirname, '..', 'dist')
+
+if(fs.existsSync(TO)){
+  let file = []
+  glob.sync(`${TO}/**`).forEach((pathname) => {
+    file.push(pathname)
+  })
+  for(let i = file.length - 1; i >= 0; i--){
+    if(fs.statSync( file[i] ).isFile()){
+      fs.unlinkSync(file[i])
+    } else {
+      fs.rmdirSync(file[i])
+    }
+  }
+}
+fs.mkdirSync(TO)
 
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
   if (err) throw err
