@@ -1,16 +1,13 @@
 <template>
   <div>
-
+    bottomframe
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'bottomframe'
-    
-  }
+export default {
+  name: 'bottomframe'
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

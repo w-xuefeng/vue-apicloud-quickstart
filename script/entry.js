@@ -1,6 +1,7 @@
 const glob = require('glob');
 const path = require('path');
 const fs = require('fs');
+const pageConfig = require('../src/config/page');
 
 const tempEntry = {
   template: 'public/index.html',
@@ -42,14 +43,13 @@ function createEntries() {
     );
     result[pageName] = {
       ...tempEntry,
+      ...pageConfig[pageName],
+      chunks: ['chunk-vendors', 'chunk-common', pageName],
       entry: resolve(`${jsFileName}.js`),
-      filename: `${pageName}.html`,
-      title: ''
+      filename: `${pageName}.html`
     };
     return result;
   }, {});
 }
 
-console.log(createEntries());
-
-module.exports = { getPages, createEntries };
+module.exports = { createEntries };
