@@ -1,17 +1,16 @@
 <template>
-    <div>
-      {{title}}
-    </div>
+  <div>
+
+  </div>
 </template>
 
 <script>
-export default {
-  data () {
-    return {
-      title: 'login'
-    }
-  },
-  created () {
+  export default {
+    name: 'login'
+    
   }
-}
 </script>
+
+<style lang="scss" scoped>
+
+</style>
