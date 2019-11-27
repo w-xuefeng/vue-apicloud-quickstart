@@ -1,12 +1,15 @@
 <template>
-  <div>
-    bottomframe
-  </div>
+  <bottom-nav />
 </template>
 
 <script>
+import BottomNav from '@/components/BottomNav';
+
 export default {
-  name: 'bottomframe'
+  name: 'bottomframe',
+  components: {
+    BottomNav
+  }
 };
 </script>
 
