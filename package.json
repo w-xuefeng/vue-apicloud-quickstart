@@ -5,9 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "generate": "node script/generate.js",
     "lint": "vue-cli-service lint --fix -C .eslintrc.js --ext .js,.vue ./src"
   },
   "dependencies": {
+    "compressing": "^1.4.0",
     "core-js": "^3.3.2",
     "vue": "^2.6.10"
   },

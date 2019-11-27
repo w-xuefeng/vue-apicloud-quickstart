@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 /dist
+/widget
+widget.zip
 
 # local env files
 .env.local

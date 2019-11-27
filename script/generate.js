@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const glob = require('glob');
 const child_process = require('child_process');
+const compressing = require('compressing');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
@@ -11,16 +12,8 @@ const FROME = resolve('dist');
 const INDEXFILE = resolve('index.html');
 const CONFIGXML = resolve('config.xml');
 const TO = resolve('widget');
+const TOZIP = resolve('widget.zip');
 const OtherFiles = ['res'];
-
-// function insertVendor() {
-//   const cssVendor = `<link href=./static/css/vendor.css rel=stylesheet>`
-//   const jsVendor = `<script type=text/javascript src=./static/js/vendor.js></script>`
-//   glob.sync(`${FROME}/*.html`).forEach((pathname) => {
-//     let tempContent = fs.readFileSync(pathname).toString();
-//     fs.writeFileSync(pathname, tempContent.replace(/<link/, `${cssVendor}<link`).replace(/<script/, `${jsVendor}<script`))
-//   })
-// }
 
 function getSource() {
   let source = [];
@@ -39,7 +32,6 @@ function getSource() {
 }
 
 function copyFile() {
-  // insertVendor()
   let { source, dir } = getSource();
   dir.forEach(e => fs.mkdirSync(`${TO}${e}`));
   source.forEach(e => fs.copyFileSync(e.path, `${TO}${e.name}`));
@@ -58,10 +50,20 @@ function copyFile() {
         match => `${match.replace(/http:\/\/[\W\w]*:\d+\//, 'html/')}`
       )
   );
-  console.log(`Generate widget complete.`);
+  compressing.tgz
+    .compressDir(TO, TOZIP)
+    .then(() => {
+      console.log(`Generate widget complete.`);
+    })
+    .catch(e => {
+      console.error(`Compressing widget error, error info: ${e}`);
+    });
 }
 
 function generate() {
+  if (fs.existsSync(TOZIP)) {
+    fs.unlinkSync(TOZIP);
+  }
   if (fs.existsSync(TO)) {
     let file = [];
     glob.sync(`${TO}/**`).forEach(pathname => {
@@ -89,6 +91,7 @@ function generate() {
     copyFile();
   }
 }
+
 function copyOtherFiles(from, to) {
   let source = [];
   let dir = [];
@@ -112,4 +115,5 @@ function copyOtherFiles(from, to) {
   dir.forEach(e => fs.mkdirSync(`${resolve(to)}${e}`));
   source.forEach(e => fs.copyFileSync(e.path, `${resolve(to)}${e.name}`));
 }
+
 generate();

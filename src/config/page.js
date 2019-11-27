@@ -1,16 +1,20 @@
-const pageConfig = {
-  indexindex: {
-    title: '首页'
+const pages = [
+  {
+    title: '首页',
+    path: 'index/index'
   },
-  loginindex: {
-    title: '登录页'
+  {
+    title: '登录页',
+    path: 'login/index'
   },
-  gestureunlockindex: {
-    title: '手势解锁'
+  {
+    title: '手势解锁',
+    path: 'gestureunlock/index'
   },
-  bottomframeindex: {
-    title: '底部导航'
+  {
+    title: '底部导航',
+    path: 'bottomframe/index'
   }
-}
+];
 
-module.exports = pageConfig
+module.exports = pages

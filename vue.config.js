@@ -1,12 +1,13 @@
-const { createEntries } = require('./script/entry');
+const { createEntries, entriesLoader } = require('./script/entry');
 module.exports = {
   outputDir: 'dist',
   publicPath: './',
   filenameHashing: false,
+  pages: createEntries(),
   // devServer: {
   //   proxy: {
   //     '/api': {
-  //       target: 'https://api.wangxuefeng.com.cn/',
+  //       target: 'http://targeturl:port/',
   //       changeOrigin: true,
   //       pathRewrite: {
   //         '^/api': ''
@@ -14,5 +15,5 @@ module.exports = {
   //     }
   //   }
   // },
-  pages: (console.log(createEntries()), createEntries())
+  chainWebpack: config => entriesLoader(config)
 };
