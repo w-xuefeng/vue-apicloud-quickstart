@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="230" src="./public/res/logo.png">
+  <img width="230" src="./public/res/img/logo.png">
 </p>
 <h1 align="center">
   vue-apicloud-quickstart
