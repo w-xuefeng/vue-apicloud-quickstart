@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import ReadyPlugin from './ready.plugin';
+const pages = require('@/config/page');
 
 Vue.config.productionTip = false;
 
@@ -17,9 +18,64 @@ Object.defineProperty(Vue.prototype, '$api', {
   }
 });
 
+function getPageMap() {
+  return pages.reduce((rst, page) => {
+    rst[page.name] = {
+      ...page,
+      htmlPath: page.path.replace(/\/(\w)/, (match, $1) =>
+        $1.toLocaleLowerCase()
+      )
+    };
+    return rst;
+  }, {});
+}
+
+Vue.prototype.$pageMap = {
+  pages: getPageMap()
+};
+
+Vue.prototype.$n2p = function(name) {
+  if (getPageMap()[name]) {
+    return getPageMap()[name].htmlPath;
+  } else {
+    return undefined;
+  }
+};
+
+function bindKeyBackExitApp() {
+  if (typeof api !== 'undefined') {
+    window.api.addEventListener(
+      {
+        name: 'keyback'
+      },
+      function() {
+        window.api.toast({
+          msg: '再按一次返回键退出' + window.api.appName,
+          duration: 2000,
+          location: 'bottom'
+        });
+        window.api.addEventListener(
+          {
+            name: 'keyback'
+          },
+          function() {
+            window.api.closeWidget({ silent: true });
+          }
+        );
+        setTimeout(() => {
+          bindKeyBackExitApp();
+        }, 3000);
+      }
+    );
+  }
+}
+
+Vue.prototype.$bindKeyBackExitApp = bindKeyBackExitApp;
+
 var _openw = null;
 Vue.prototype.$page = {
   open(url, { pageParam, animation, winOpts } = {}) {
+    console.log('s', _openw);
     if (_openw) {
       return;
     }
@@ -38,6 +94,7 @@ Vue.prototype.$page = {
       ...(winOpts || {})
     };
     api.openWin(params);
+    console.log('e', _openw);
   },
   close() {
     if (!window.api) {
@@ -45,6 +102,19 @@ Vue.prototype.$page = {
       return;
     }
     window.api.closeWin();
+  },
+  closeToWin({ url, animation }) {
+    url = url.endsWith('.html') ? url : url + '.html';
+    if (typeof api !== 'undefined') {
+      const name = `win_${url}`;
+      if (animation) {
+        api.closeToWin({ name, animation });
+      } else {
+        api.closeToWin({ name });
+      }
+    } else {
+      window.location.href = url;
+    }
   }
 };
 
