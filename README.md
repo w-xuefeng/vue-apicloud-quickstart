@@ -11,7 +11,6 @@
 A Vue.js project in APICloud
 </div>
 
-
 > ## apicloud 代码文件的命名规范
 >
 > 文件夹命名，文件命名不能带 - 或多个. 不要有大写字符
@@ -23,3 +22,27 @@ A Vue.js project in APICloud
 > 正确文件夹命名格式举例： loginhtml
 > 
 > 错误文件夹命名格式举例： login-html; login.html
+
+
+# 挂载在 Vue 原型上的工具方法和属性
+### 可在 Vue 实例中直接通过 this 访问
+
+- 方法
+
+  - $getPageMap
+  - $bindKeyBackExitApp
+  - $getQueryString
+  - $getSafeArea
+  - $getWinSize
+  - $n2p
+  - $headerRH
+  - $tabRH
+  - $pageWithHead
+
+- 属性
+
+  - api
+  - $api
+  - $pageMap
+  - $page
+  - $frame

@@ -4,7 +4,7 @@
  */
 (function (window) {
   var u = {}
-  var isAndroid = (/android/gi).test(navigator.appVersion)
+  var isAndroid = typeof api !== 'undefined' && (/android/gi).test(navigator.appVersion)
   var uzStorage = function () {
     var ls = window.localStorage
     if (isAndroid) {
