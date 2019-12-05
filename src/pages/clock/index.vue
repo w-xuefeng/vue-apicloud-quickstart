@@ -9,6 +9,11 @@
 <script>
 export default {
   name: 'home1',
+  apiEvent: {
+    clockHeaderRightClick() {
+      alert('点击了头部右侧按钮');
+    }
+  },
   onReady() {
     this.$bindKeyBackExitApp();
   }

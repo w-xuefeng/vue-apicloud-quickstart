@@ -100,7 +100,7 @@ export default {
 .login {
   width: 100%;
   height: 100vh;
-  background: linear-gradient(135deg, rgb(4, 49, 133), rgb(96, 204, 247));
+  background: linear-gradient(135deg, rgb(5, 127, 228), rgb(0, 150, 125));
   .loginBody {
     width: 100%;
     max-width: 400px;

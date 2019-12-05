@@ -5,7 +5,7 @@
         src="res/img/logo.png"
         width="50%"
         style="margin: 80px auto 30px auto;display: block;"
-        alt=""
+        alt="logo"
       />
     </div>
     <div class="content">
@@ -15,7 +15,13 @@
           :key="i"
           :icon="g.icon"
           :text="g.text"
-          @click="gotoSomeWhere(g.pathName, g.text)"
+          @click="
+            gotoSomeWhere({
+              pathName: g.pathName,
+              title: g.text,
+              options: g.options
+            })
+          "
         />
       </Grid>
     </div>
@@ -38,31 +44,29 @@ export default {
     };
   },
   methods: {
-    gotoSomeWhere(pathname, title) {
-      if (!pathname) return;
+    gotoSomeWhere({ pathName, title, options }) {
+      if (!pathName) return;
       this.$pageWithHead({
         title,
-        name: pathname,
-        back: true
+        name: pathName,
+        back: true,
+        ...options
       });
     }
   },
   apiEvent: {
-    tap() {
-      alert('点击了页面');
-      api.setScreenOrientation({
-        orientation: 'auto'
-      });
-    },
     scrolltobottom() {
       alert('已滚动到底部');
+    },
+    swipeup() {
+      api.refreshHeaderLoadDone();
     }
   },
   onWindowChange() {
     alert('lalala');
   },
   onReady() {
-    this.$setPullDownRefresh().then(() => {
+    this.$setPullDownRefresh(() => {
       api.refreshHeaderLoadDone();
     });
     this.$bindKeyBackExitApp();

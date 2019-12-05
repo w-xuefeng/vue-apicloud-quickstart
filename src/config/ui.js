@@ -37,6 +37,12 @@ export const frameGroupOpts = {
     {
       name: 'frameGroup-clock',
       pathName: 'clock',
+      options: {
+        right: true,
+        rightOptions: {
+          icon: 'clock-o'
+        }
+      }
     },
     {
       name: 'frameGroup-myhome2',
@@ -51,9 +57,15 @@ export const frameGroupOpts = {
 
 export const homeGridPane = [
   {
-    text: '啦啦',
+    text: '哒哒',
     icon: 'records',
-    pathName: 'leave'
+    pathName: 'dada',
+    options: {
+      right: true,
+      rightOpts: {
+        icon: 'notes-o'
+      }
+    }
   }, 
   {
     text: '文字',

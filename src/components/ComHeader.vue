@@ -5,6 +5,9 @@
       <span>返回</span>
     </div>
     <span>{{ title }}</span>
+    <div v-if="right" class="right" @click="rightClick()">
+      <slot name="right" />
+    </div>
   </div>
 </template>
 
@@ -18,9 +21,24 @@ export default {
   },
   props: {
     title: String,
+    framePathName: {
+      type: String,
+      required: true
+    },
     back: {
       type: Boolean,
       default: false
+    },
+    right: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    rightClick() {
+      this.api.sendEvent({
+        name: `${this.framePathName}HeaderRightClick`
+      });
     }
   },
   onReady() {
@@ -50,6 +68,13 @@ export default {
   .back {
     position: absolute;
     left: 15px;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+  }
+  .right {
+    position: absolute;
+    right: 15px;
     font-size: 1em;
     display: flex;
     align-items: center;

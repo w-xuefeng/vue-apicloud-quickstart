@@ -39,6 +39,11 @@ const pages = [
     name: 'headwin',
     path: 'headwin/index'
   },
+  {
+    title: '哒哒',
+    name: 'dada',
+    path: 'dada/index'
+  }
 ];
 
 module.exports = pages

@@ -1,7 +1,7 @@
 <template>
   <div class="home2" :style="{ paddingBottom: $tabRH() + 'px' }">
     <div class="content">
-      oooo
+      这里是哈哈
     </div>
   </div>
 </template>
@@ -20,5 +20,12 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  .content {
+    width: 100%;
+    height: calc(100vh - 120px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 </style>

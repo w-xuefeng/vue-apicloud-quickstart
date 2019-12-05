@@ -1,22 +1,36 @@
 <template>
   <div class="head-window">
-    <com-header :title="title" :back="back" />
+    <com-header
+      :title="title"
+      :back="back"
+      :right="right"
+      :framePathName="framePathName"
+    >
+      <template v-slot:right>
+        <Icon :name="rightIcon" />
+      </template>
+    </com-header>
   </div>
 </template>
 
 <script>
 import ComHeader from '@/components/ComHeader';
 import { frameTabChange } from '@/config/eventName';
+import { Icon } from 'vant';
 
 export default {
-  name: 'index',
+  name: 'headWin',
   components: {
-    ComHeader
+    ComHeader,
+    Icon
   },
   data() {
     return {
       title: '',
-      back: false
+      back: false,
+      right: false,
+      rightIcon: '',
+      framePathName: ''
     };
   },
   methods: {
@@ -44,9 +58,12 @@ export default {
         rect = {},
         title,
         back,
+        right,
+        rightOpts,
         tab,
         tabsFrameName,
         tabOpts,
+        name,
         frameGroup,
         frameGroupOpts = {},
         bindKeyBackExitApp
@@ -62,6 +79,10 @@ export default {
       }
       this.title = title || '标题';
       this.back = back;
+      this.right = right;
+      if (right) {
+        this.rightIcon = rightOpts.icon;
+      }
       if (frameGroup) {
         const { name, rect = {}, frames } = frameGroupOpts;
         frames.forEach(e => {
@@ -82,6 +103,15 @@ export default {
             if (tab && tabOpts) {
               this.title = tabOpts.tabs[ret.index].text;
             }
+            this.framePathName = frames[ret.index].pathName;
+            if (frames[ret.index].options) {
+              const { right, rightOptions } = frames[ret.index].options;
+              this.right = right;
+              this.rightIcon = rightOptions.icon;
+            } else {
+              this.right = false;
+              this.rightIcon = '';
+            }
             this.api.sendEvent({
               name: frameTabChange,
               extra: { ...ret }
@@ -89,8 +119,9 @@ export default {
           }
         );
       } else {
+        this.framePathName = name;
         this.$frame.open({
-          name: pageParam.name,
+          name,
           rect: {
             x: rect.x || 0,
             y: rect.y || headerRH,

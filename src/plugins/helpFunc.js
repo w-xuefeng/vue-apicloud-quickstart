@@ -91,31 +91,29 @@ export function pageWithHead(opts) {
     pageParam: {
       tab: false,
       back: false,
+      right: false,
       bindKeyBackExitApp: false,
       ...opts
     }
   });
 }
 
-export function setPullDownRefresh(options) {
-  return new Promise((resolve, reject) => {
-    api.setRefreshHeaderInfo(
-      {
-        visible: true,
-        loadingImg: 'widget://image/refresh.png',
-        bgColor: '#282c34',
-        textColor: '#fff',
-        textDown: '下拉刷新...',
-        textUp: '松开刷新...',
-        showTime: true,
-        ...options
-      },
-      (ret, err) => {
-        if (err) reject(err);
-        resolve(ret);
-      }
-    );
-  });
+export function setPullDownRefresh(fn, options) {
+  api.setRefreshHeaderInfo(
+    {
+      visible: true,
+      loadingImg: 'widget://image/refresh.png',
+      bgColor: '#282c34',
+      textColor: '#fff',
+      textDown: '下拉刷新...',
+      textUp: '松开刷新...',
+      showTime: true,
+      ...options
+    },
+    (ret, err) => {
+      fn && fn(ret, err);
+    }
+  );
 }
 
 export const page = {
@@ -209,3 +207,5 @@ export const frame = {
 export const pageMap = {
   pages: getPageMap()
 };
+
+export const isAndroid = /android/gi.test(navigator.appVersion);

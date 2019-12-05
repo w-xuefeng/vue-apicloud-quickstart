@@ -11,6 +11,7 @@ import { LDK } from '@/utils';
 import { tabOpts, frameGroupOpts, tabsFrameName } from '@/config/ui';
 
 export default {
+  name: 'indexIndex',
   data() {
     return {
       time: 5,
@@ -57,7 +58,7 @@ export default {
   justify-content: center;
   color: #fff;
   flex-direction: column;
-  background: linear-gradient(45deg, rgb(96, 204, 247), rgb(4, 49, 133));
+  background: linear-gradient(45deg, rgb(5, 127, 228), rgb(0, 150, 125));
 }
 .timecount {
   width: 40px;
