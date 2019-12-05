@@ -38,11 +38,13 @@ A Vue.js project in APICloud
   - $headerRH
   - $tabRH
   - $pageWithHead
+  - $setPullDownRefresh
 
 - 属性
 
   - api
   - $api
-  - $pageMap
   - $page
   - $frame
+  - $pageMap
+  - $isAndroid
