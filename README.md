@@ -11,6 +11,8 @@
 A Vue.js project in APICloud
 </div>
 
+[Demo 体验](https://github.com/w-xuefeng/vue-apicloud-quickstart/releases/download/0.0.3/demo.apk)
+
 > ## apicloud 代码文件的命名规范
 >
 > 文件夹命名，文件命名不能带 - 或多个. 不要有大写字符

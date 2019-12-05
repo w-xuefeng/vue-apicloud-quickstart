@@ -1,11 +1,11 @@
- <widget id="A6012345678900"  version="0.0.1">
+ <widget id="A6020064376443"  version="0.0.1">
 
-    <name>vue示例</name>
+    <name>VueQuickstart</name>
     <description>
-         Example For APICloud.
+			Example for APICloud with Vue.
     </description>
-    <author email="w-xuefeng@qq.com" href="http://www.apicloud.com">
-        w-xuefeng
+    <author email="w-xuefeng@qq.com" href="https://wangxuefeng.com.cn">
+			w-xuefeng
     </author>
     <content src="index.html" />
     <access origin="*" />
