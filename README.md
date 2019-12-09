@@ -6,6 +6,7 @@
 </h1>
 <div align="center">
 
+[![Github Action](https://github.com/w-xuefeng/vue-apicloud-quickstart/workflows/Node%20CI/badge.svg?branch=master)](https://github.com/w-xuefeng/vue-apicloud-quickstart/actions)
 [![Build Status](https://www.travis-ci.org/w-xuefeng/vue-apicloud-quickstart.svg?branch=master)](https://www.travis-ci.org/w-xuefeng/vue-apicloud-quickstart)
 
 A Vue.js project in APICloud
