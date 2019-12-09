@@ -4,6 +4,7 @@ export const uiConfig = {
 }
 
 export const tabsFrameName = 'bottomTabsNav';
+export const gestureUnlockFrameName = 'gestureUnlock';
 
 export const tabOpts = {
   frameGroupName: 'home',
@@ -66,7 +67,7 @@ export const homeGridPane = [
         icon: 'notes-o'
       }
     }
-  }, 
+  },
   {
     text: '文字',
     icon: 'photo-o',
