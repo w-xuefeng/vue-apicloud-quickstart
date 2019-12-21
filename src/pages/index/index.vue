@@ -27,6 +27,7 @@ export default {
           name: 'home',
           bindKeyBackExitApp: true,
           tab: true,
+          needUnlock: true,
           tabsFrameName,
           tabOpts,
           frameGroup: true,

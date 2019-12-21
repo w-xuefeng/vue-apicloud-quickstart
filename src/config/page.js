@@ -25,6 +25,11 @@ const pages = [
     path: 'clock/index'
   },
   {
+    title: '手势解锁',
+    name: 'gestureunlock',
+    path: 'gestureunlock/index'
+  },
+  {
     title: '啦啦',
     name: 'home2',
     path: 'home2/index'

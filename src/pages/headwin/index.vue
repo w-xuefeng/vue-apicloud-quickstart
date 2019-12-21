@@ -1,5 +1,5 @@
 <template>
-  <div class="head-window">
+  <div class="head-window" v-if="ok">
     <com-header
       :title="title"
       :back="back"
@@ -14,8 +14,10 @@
 </template>
 
 <script>
+import { LDK } from '@/utils';
 import ComHeader from '@/components/ComHeader';
-import { frameTabChange } from '@/config/eventName';
+import { frameTabChange, unlockSuccess } from '@/config/eventName';
+import { gestureUnlockFrameName } from '@/config/ui';
 import { Icon } from 'vant';
 
 export default {
@@ -26,6 +28,7 @@ export default {
   },
   data() {
     return {
+      ok: false,
       title: '',
       back: false,
       right: false,
@@ -34,6 +37,26 @@ export default {
     };
   },
   methods: {
+    openUnlockFrame() {
+      const setting = this.$api.getStorage(LDK.setting);
+      if (setting && setting.gestureunlock) {
+        this.$frame.open({
+          name: gestureUnlockFrameName,
+          rect: {
+            x: 0,
+            y: 0,
+            w: 'auto',
+            h: 'auto'
+          },
+          url: this.$n2p('gestureunlock')
+        });
+        this.api.bringFrameToFront({
+          from: gestureUnlockFrameName
+        });
+      } else {
+        this.openContent();
+      }
+    },
     openTab(tabOpts, tabsFrameName = 'bottomTabsNav') {
       this.$frame.open({
         name: tabsFrameName,
@@ -51,6 +74,7 @@ export default {
     },
     openContent() {
       const pageParam = this.$page.pageParam();
+      this.ok = true;
       if (!pageParam) {
         return;
       }
@@ -133,8 +157,18 @@ export default {
       }
     }
   },
+  apiEvent: {
+    [unlockSuccess]() {
+      this.openContent();
+    }
+  },
   onReady() {
-    this.openContent();
+    const { needUnlock } = this.$page.pageParam();
+    if (needUnlock) {
+      this.openUnlockFrame();
+    } else {
+      this.openContent();
+    }
   }
 };
 </script>

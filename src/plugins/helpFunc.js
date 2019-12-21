@@ -92,6 +92,7 @@ export function pageWithHead(opts) {
       tab: false,
       back: false,
       right: false,
+      needUnlock: false,
       bindKeyBackExitApp: false,
       ...opts
     }

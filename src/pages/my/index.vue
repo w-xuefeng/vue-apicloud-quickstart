@@ -1,24 +1,40 @@
 <template>
   <div class="my" :style="{ paddingBottom: $tabRH() + 'px' }">
     <div class="content">
-      <Button @click="logout()" type="danger" class="logoutBtn">
+      <van-list class="setting-list">
+        <van-cell>
+          <span>手势解锁</span>
+          <van-switch
+            v-model="setting.gestureunlock"
+            @change="setGestureunlock"
+          />
+        </van-cell>
+      </van-list>
+      <van-button @click="logout()" type="danger" class="logoutBtn">
         退出登录
-      </Button>
+      </van-button>
     </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue';
 import { LDK } from '@/utils';
-import { Button } from 'vant';
+import { Button, List, Cell, Switch } from 'vant';
+
+Vue.use(Switch);
+Vue.use(Button);
+Vue.use(List);
+Vue.use(Cell);
 
 export default {
   name: 'my',
-  components: {
-    Button
-  },
   data() {
-    return {};
+    return {
+      setting: this.$api.getStorage(LDK.setting) || {
+        gestureunlock: false
+      }
+    };
   },
   computed: {
     winWidth() {
@@ -26,6 +42,9 @@ export default {
     }
   },
   methods: {
+    setGestureunlock() {
+      this.$api.setStorage(LDK.setting, this.setting);
+    },
     logout() {
       this.$api.rmStorage(LDK.user);
       this.$api.rmStorage(LDK.loginState);
@@ -45,8 +64,11 @@ export default {
   align-items: center;
   .content {
     width: 100%;
-    .list {
-      width: 100%;
+    .setting-list {
+      .van-cell__value {
+        display: flex;
+        justify-content: space-between;
+      }
     }
     .logoutBtn {
       width: 90%;
