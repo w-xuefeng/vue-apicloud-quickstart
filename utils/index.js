@@ -3,7 +3,7 @@ const glob = require('glob');
 const child_process = require('child_process');
 const compressing = require('compressing');
 
-function createEntries(pageConfig, tempEntry) {
+function createEntries (pageConfig, tempEntry) {
   return pageConfig.reduce((result, page) => {
     if (!page.path) {
       console.err(`page path must be required!`);
@@ -15,14 +15,14 @@ function createEntries(pageConfig, tempEntry) {
       ...tempEntry,
       title: page.title,
       chunks: ['chunk-vendors', 'chunk-common', pageName],
-      entry: `${tempEntry.entry}?page=${page.path}`,
+      entry: api.resolve(`${tempEntry.entry}?page=${page.path}`),
       filename: `${pageName}.html`
     };
     return result;
   }, {});
 }
 
-function entriesLoader(api, config, tempEntry) {
+function entriesLoader (api, config, tempEntry) {
   config.module
     .rule('entry')
     .test(api.resolve(tempEntry.entry))
@@ -31,7 +31,7 @@ function entriesLoader(api, config, tempEntry) {
     .end();
 }
 
-function resolve(api, dir) {
+function resolve (api, dir) {
   return api.resolve(dir);
 }
 
@@ -51,7 +51,7 @@ function getSource (FROME) {
   return { source, dir };
 }
 
-function copyFile ({ FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, outputDir, TOZIP}) {
+function copyFile ({ FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, outputDir, TOZIP }) {
   let { source, dir } = getSource(FROME);
   dir.forEach(e => fs.mkdirSync(`${TO}${e}`));
   source.forEach(e => fs.copyFileSync(e.path, `${TO}${e.name}`));
