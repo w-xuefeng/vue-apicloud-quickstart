@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const glob = require('glob');
 const child_process = require('child_process');
 const compressing = require('compressing');
@@ -27,7 +28,7 @@ function entriesLoader (api, config, tempEntry) {
     .rule('entry')
     .test(api.resolve(tempEntry.entry))
     .use('entry-loader')
-    .loader('../entry/entry-loader.js')
+    .loader(path.join(__dirname, '..', 'entry/entry-loader.js'))
     .end();
 }
 
