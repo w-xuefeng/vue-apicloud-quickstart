@@ -13,5 +13,5 @@ module.exports = api => {
   if (fs.existsSync(api.resolve('src/App.vue'))) {
     fs.renameSync(api.resolve('src/App.vue'), api.resolve('src/app.vue'));
   }
-  api.render('./template')
+  api.render('./template', { title: '<%= htmlWebpackPlugin.options.title %>' });
 }
