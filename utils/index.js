@@ -3,7 +3,7 @@ const glob = require('glob');
 const child_process = require('child_process');
 const compressing = require('compressing');
 
-function createEntries (pageConfig, tempEntry) {
+function createEntries (api, pageConfig, tempEntry) {
   return pageConfig.reduce((result, page) => {
     if (!page.path) {
       console.err(`page path must be required!`);
