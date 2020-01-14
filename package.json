@@ -6,7 +6,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/w-xuefeng/vue-apicloud-quickstart.git"
+    "url": "git+https://github.com/w-xuefeng/vue-cli-plugin-apicloud.git"
   },
   "keywords": [
     "apicloud",
