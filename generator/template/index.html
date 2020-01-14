@@ -5,15 +5,15 @@
   <meta name="viewport"
     content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
   <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-  <title>vue-apicloud-quickstart</title>
+  <title><%= app.name %></title>
 </head>
 
 <body>
   <script>
     window.apiready = function () {
       api.openWin({
-        name: 'index',
-        url: 'http://192.168.10.15:8080/indexindex.html',
+        name: '<%= app.entries[0].name %>',
+        url: 'http://<%= app.ip %>:<%= app.port %>/<%= app.entries[0].htmlpath %>.html',
         slidBackEnabled: false
       });
     };

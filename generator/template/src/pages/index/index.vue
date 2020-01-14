@@ -1,21 +1,31 @@
 <template>
-  <div class='index'>
-    <h1>HelloWorld</h1>
+  <div id="app">
+    <img alt="Vue logo" src="res/img/logo.png" width="50%" />
+    <HelloWorld msg="Welcome to Your Vue.js App with APICloud" />
   </div>
 </template>
 
 <script>
+import HelloWorld from '@/components/HelloWorld.vue'
+
 export default {
-  name: 'index',
-};
+  name: 'app',
+  components: {
+    HelloWorld
+  }
+}
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.index {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-content: center;
+<style lang="scss">
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+  img {
+    max-width: 300px;
+  }
 }
 </style>

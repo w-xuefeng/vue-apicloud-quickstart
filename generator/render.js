@@ -1,7 +1,8 @@
 const fs = require('fs');
-module.exports = api => {
+module.exports = (api, app) => {
   api.extendPackage({
     scripts: {
+      "serve": `vue-cli-service serve --port ${app.port}`,
       "generate": "vue-cli-service generate"
     },
     devDependencies: {
@@ -13,5 +14,5 @@ module.exports = api => {
   if (fs.existsSync(api.resolve('src/App.vue'))) {
     fs.renameSync(api.resolve('src/App.vue'), api.resolve('src/app.vue'));
   }
-  api.render('./template', { title: '<%= htmlWebpackPlugin.options.title %>' });
+  api.render('./template', { title: '<%= htmlWebpackPlugin.options.title %>', app });
 }

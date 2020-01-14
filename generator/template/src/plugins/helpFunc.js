@@ -180,8 +180,4 @@ export const frame = {
   }
 };
 
-export const pageMap = {
-  pages: getPageMap()
-};
-
-export const isAndroid = /android/gi.test(navigator.appVersion);
+export const pagesInfo = Object.keys(getPageMap()).map(k => ({ ...getPageMap()[k]}))

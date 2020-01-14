@@ -1,10 +1,10 @@
- <widget id="A60123456789"  version="0.0.1">
-	<name>vue-apicloud-quickstart-template</name>
+ <widget id="<%= app.id %>"  version="0.0.1">
+	<name><%= app.name %></name>
 	<description>
-		vue-apicloud-quickstart-template
+		<%= app.description %>
 	</description>
 	<author>
-		w-xuefeng
+		<%= app.author %>
 	</author>
 	<content src="index.html" />
 	<access origin="*" />

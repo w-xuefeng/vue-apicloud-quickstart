@@ -137,10 +137,32 @@ function copyOtherFiles (from, to, api) {
   source.forEach(e => fs.copyFileSync(e.path, `${resolve(api, to)}${e.name}`));
 }
 
+function getIPAdress () {
+  const interfaces = require('os').networkInterfaces();
+  for (let devName in interfaces) {
+    let iface = interfaces[devName];
+    for (let i = 0; i < iface.length; i++) {
+      let alias = iface[i];
+      if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+        return alias.address;
+      }
+    }
+  }
+}
+
+function getEntries (pageConfig) {
+  return pageConfig.map(e => ({
+    name: e.name,
+    htmlpath: e.path.replace(/\/(\w)/, (match, $1) => $1.toLocaleLowerCase())
+  }))
+}
+
 module.exports = {
   createEntries,
   entriesLoader,
   resolve,
   getSource,
-  generate
+  generate,
+  getIPAdress,
+  getEntries
 }
