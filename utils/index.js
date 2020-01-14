@@ -81,7 +81,7 @@ function copyFile ({ api, FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, o
     });
 }
 
-function generate ({ api, FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, outputDir, TOZIP }) {
+function generate ({ api, FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, outputDir, TOZIP, rebuild }) {
   if (fs.existsSync(TOZIP)) {
     fs.unlinkSync(TOZIP);
   }
@@ -99,7 +99,7 @@ function generate ({ api, FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, o
     }
   }
   fs.mkdirSync(TO);
-  if (!fs.existsSync(FROME)) {
+  if (rebuild || !fs.existsSync(FROME)) {
     child_process.exec(`npm run build`, (error, stdout) => {
       if (error) {
         console.error(`exec error: ${error}`);

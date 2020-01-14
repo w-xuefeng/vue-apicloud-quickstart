@@ -1,8 +1,9 @@
 const buildConfig = {
   outputDir: 'dist',
   publicPath: './',
+  rebuild: true,
   filenameHashing: false,
-  productionSourceMap: false,
+  productionSourceMap: false
 };
 
 const tempEntry = {

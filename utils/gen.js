@@ -9,7 +9,7 @@ module.exports = api => {
     const TO = resolve(api, target);
     const TOZIP = resolve(api, targetZip);
     const OtherFiles = files;
-    const config = { api, FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, outputDir: buildConfig.outputDir, TOZIP }
+    const config = { api, FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, outputDir: buildConfig.outputDir, TOZIP, rebuild: buildConfig.rebuild }
     generate(config);
   });
 }
