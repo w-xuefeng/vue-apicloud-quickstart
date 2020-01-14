@@ -17,7 +17,7 @@ const generateConfig = {
   indexHTML: 'index.html',
   configXML: 'config.xml',
   target: 'widget',
-  targetZip: 'widget',
+  targetZip: 'widget.zip',
   files: ['res']
 };
 

@@ -52,12 +52,12 @@ function getSource (FROME) {
   return { source, dir };
 }
 
-function copyFile ({ FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, outputDir, TOZIP }) {
+function copyFile ({ api, FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, outputDir, TOZIP }) {
   let { source, dir } = getSource(FROME);
   dir.forEach(e => fs.mkdirSync(`${TO}${e}`));
   source.forEach(e => fs.copyFileSync(e.path, `${TO}${e.name}`));
   OtherFiles.forEach(e => {
-    copyOtherFiles(e, target);
+    copyOtherFiles(e, target, api);
   });
   fs.copyFileSync(CONFIGXML, `${TO}/config.xml`);
   fs.renameSync(`${TO}/${outputDir}`, `${TO}/html`);
@@ -81,7 +81,7 @@ function copyFile ({ FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, output
     });
 }
 
-function generate ({ FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, outputDir, TOZIP }) {
+function generate ({ api, FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, outputDir, TOZIP }) {
   if (fs.existsSync(TOZIP)) {
     fs.unlinkSync(TOZIP);
   }
@@ -106,14 +106,14 @@ function generate ({ FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, output
         return;
       }
       console.log(stdout);
-      copyFile({ FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, outputDir, TOZIP });
+      copyFile({ api, FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, outputDir, TOZIP });
     });
   } else {
-    copyFile({ FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, outputDir, TOZIP });
+    copyFile({ api, FROME, TO, OtherFiles, target, CONFIGXML, INDEXFILE, outputDir, TOZIP });
   }
 }
 
-function copyOtherFiles (from, to) {
+function copyOtherFiles (from, to, api) {
   let source = [];
   let dir = [];
   glob.sync(`${resolve(api, from)}/**`).forEach(pathname => {
