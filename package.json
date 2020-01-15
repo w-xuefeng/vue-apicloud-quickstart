@@ -1,21 +1,39 @@
 {
-  "name": "@w-xuefeng/vue-cli-plugin-apicloud",
-  "version": "0.0.4",
-  "description": "vue-cli plugin to add apicloud",
-  "private": false,
-  "main": "index.js",
+  "name": "vue-apicloud-quickstart",
+  "version": "1.0.0",
+  "description": "a simple toolkit for developing app with  vue.js in apicloud",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc --build tsconfig.json",
+    "lint": "eslint --fix -c .eslintrc.js --ext .js,.ts ./src"
+  },
+  "dependencies": {
+    "@types/fastclick": "^1.0.28",
+    "@types/js-base64": "^2.3.1",
+    "fastclick": "^1.0.6",
+    "js-base64": "^2.5.1",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.16.0",
+    "@typescript-eslint/parser": "^2.16.0",
+    "eslint": "^6.8.0",
+    "typescript": "^3.7.4"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/w-xuefeng/vue-cli-plugin-apicloud.git"
+    "url": "git+https://github.com/w-xuefeng/vue-apicloud-quickstart.git"
   },
   "keywords": [
+    "vue",
+    "vue.js",
     "apicloud",
-    "vue"
+    "toolkit"
   ],
   "author": "w-xuefeng",
   "license": "MIT",
-  "devDependencies": {
-    "compressing": "^1.5.0",
-    "glob": "^7.1.6"
-  }
+  "bugs": {
+    "url": "https://github.com/w-xuefeng/vue-apicloud-quickstart/issues"
+  },
+  "homepage": "https://github.com/w-xuefeng/vue-apicloud-quickstart#readme"
 }
