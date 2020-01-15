@@ -40,4 +40,4 @@ export default interface FrameParams extends CommonParams{
     marginBottom?: number;
     marginLeft?: number;
   };
-}
+};;;;;;;;;;

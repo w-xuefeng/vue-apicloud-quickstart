@@ -1,4 +1,4 @@
-import CommonParams from './CommonParams';
+import CommonParams from './CommonParams'
 interface WindowParams extends CommonParams{
     /**
      * 默认值：false
@@ -52,4 +52,4 @@ interface WindowParams extends CommonParams{
 
 }
 
-export default WindowParams;
+export default WindowParams

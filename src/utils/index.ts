@@ -10,7 +10,7 @@ interface ObjectMap<T> {
 }
 
 const helpFunc: (opts: InstallOptions) => {
-  [any: string]: any
+  [any: string]: any;
 } = (opts: InstallOptions) => {
   const { pages } = opts
 

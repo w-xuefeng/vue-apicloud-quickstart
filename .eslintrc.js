@@ -9,7 +9,9 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    'semi': ['error', 'always']
+    '@typescript-eslint/no-this-alias': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+    'semi': ['warn', 'never']
   },
   parserOptions: {
     parser: '@typescript-eslint/parser'

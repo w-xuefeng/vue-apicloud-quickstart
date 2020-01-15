@@ -188,11 +188,11 @@ export default interface CommonParams {
    * 
   */
   progress?: {
-      type: 'default' | 'page';
-      title: string;
-      text: string;
-      color: string;
-      height: number;
+    type: 'default' | 'page';
+    title: string;
+    text: string;
+    color: string;
+    height: number;
   };
 
   /**
