@@ -4,7 +4,7 @@
   <p>使用 Vue.js + APICloud 开发移动端应用的起手式</p>
 </div>
 
-[English](./README_EN.md) | [简体中文](./README.md)
+[English](./README_EN.md) | 简体中文
 
 ## 使用方法
 

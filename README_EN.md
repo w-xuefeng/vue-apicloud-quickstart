@@ -4,7 +4,7 @@
   <p> The start up of using vue.js + apicloud to develop mobile applications</p>
 </div>
 
-[English](./README_EN.md) | [简体中文](./README.md)
+English | [简体中文](./README.md)
 
 ## Usage
 
