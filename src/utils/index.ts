@@ -16,9 +16,7 @@ interface OpenWinOptions {
   winOpts?: WindowParams;
 }
 
-const helpFunc: (opts: InstallOptions) => {
-  [any: string]: any;
-} = (opts: InstallOptions) => {
+const helpFunc = (opts: InstallOptions): { [any: string]: any } => {
   const { pages } = opts
 
   const getPageMap: () => ObjectMap<Page> = () => {
@@ -179,7 +177,7 @@ const helpFunc: (opts: InstallOptions) => {
     }
   }
 
-  const openFrame =  (params: FrameParams) => {
+  const openFrame = (params: FrameParams) => {
     let { url } = params
     const httpUrl = url.startsWith('http:') || url.startsWith('https:') || url.startsWith('//:')
     url = url.endsWith('.html') ? url : ( httpUrl ? url : url + '.html')
@@ -225,6 +223,29 @@ const helpFunc: (opts: InstallOptions) => {
     getWinSize,
     setPullDownRefresh
   }  
+}
+
+export const apiError = ['api is not defined', 'apiready is not defined']
+
+export const handelApiError = (error: Error, msg?: { cn: string; en: string }) => {
+  if (apiError.includes(error.message)) {
+    const { cn = '', en = '' } = msg || {}
+    const warningEN = en || 'Please use mobile device to debug native module'
+    const warningCN = cn || '请使用移动设备调试原生模块'
+    console.warn(`[There is no api on the PC side] ${warningEN}`)
+    console.warn(`[PC 端没有 API 环境变量] ${warningCN}`)
+    console.info(error.stack)
+    return error
+  }
+  throw error
+}
+
+export const catchApiError = (fn: Function, msg?: { cn: string; en: string }) => {
+  try {
+    fn()
+  } catch (error) {
+    handelApiError(error, msg)
+  }
 }
 
 export default helpFunc

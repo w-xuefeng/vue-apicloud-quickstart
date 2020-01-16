@@ -1,6 +1,7 @@
 import HelpFunc from '../utils'
 import { PluginObject, PluginFunction } from 'vue'
 import { InstallOptions } from '../models'
+import '../utils/api'
 
 const install: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor, options?: InstallOptions) => {
   if (options) {
