@@ -1,4 +1,4 @@
-import { FastClick }  from 'fastclick'
+import FastClick  from 'fastclick'
 import { PluginObject, PluginFunction } from 'vue'
 import { InstallOptions } from '../models'
 
@@ -19,7 +19,7 @@ const install: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor, option
   const init = (fn: () => void) => {
     updateOrientation()
     fn && fn()
-    FastClick.attach(document.body)
+    FastClick(document.body)
     document.dispatchEvent(new MessageEvent('apiready', { data: {} }))
   }
   function initApiReady(debugOnPC: boolean, fn: () => void) {

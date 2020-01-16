@@ -1,3 +1,4 @@
+import { AnimationType } from './MethodsParams'
 export default interface CommonParams {
   /**
    * 默认值：无
@@ -54,11 +55,7 @@ export default interface CommonParams {
    *    from_top 从顶部开始动画
    *    from_bottom 从底部开始动画  
   */
-  animation?: {
-    type: 'none' | 'push' | 'movein' | 'fade' | 'flip' | 'reveal' | 'ripple' | 'curl' | 'un_curl' | 'suck' | 'cube';
-    subType: 'from_right' | 'from_left' | 'from_top' | 'from_bottom';
-    duration: number;
-  };
+  animation?: AnimationType;
 
   /**
    * 默认值：无
