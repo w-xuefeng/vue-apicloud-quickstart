@@ -35,7 +35,7 @@ English | [简体中文](./README.md)
       el: '#app',
       render: h => h(App)
     })
-    // Chain call init method, that will create Vue instance
+    // Chained-calls init method, that will create a Vue instance
     // Same as new vue() when turning on PC debugging
     // Vue instance will be created in apiready's callback when it is not turned on
   ```
