@@ -16,7 +16,7 @@ interface OpenWinOptions {
   winOpts?: WindowParams;
 }
 
-const helpFunc = (opts: InstallOptions): { [any: string]: any } => {
+const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
   const { pages } = opts
 
   const getPageMap: () => ObjectMap<Page> = () => {
