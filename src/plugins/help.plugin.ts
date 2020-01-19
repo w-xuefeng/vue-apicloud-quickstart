@@ -16,12 +16,12 @@ const install: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor, option
   }
   Object.defineProperty(Vue.prototype, 'api', {
     get: function () {
-      return api
+      return window.api
     }
   })
   Object.defineProperty(Vue.prototype, '$api', {
     get: function () {
-      return $api
+      return window.$api
     }
   })
 

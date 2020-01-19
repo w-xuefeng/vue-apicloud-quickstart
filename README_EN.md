@@ -10,38 +10,7 @@ English | [简体中文](./README.md)
 
 ### Use alone
 
-- Install
-
-  ```shell
-  $ npm i vue-apicloud-quickstart
-  ```
-- Import project in main.js
-
-  ```js
-  import Vue from 'vue'
-  import App from './App.vue'
-  import VAQ from 'vue-apicloud-quickstart'
-  import pages from '@/config/pages'
-  // Page profile, manual creation required
-
-  Vue.config.productionTip = false
-
-  Vue
-    .use(VAQ, {
-      pages,
-      debugOnPC: true // Enable PC debugging or not, false by default
-    })
-    .init({
-      el: '#app',
-      render: h => h(App)
-    })
-    // Chain call init method, that will create Vue instance
-    // Same as new vue() when turning on PC debugging
-    // Vue instance will be created in apiready's callback when it is not turned on
-  ```
-### Use vue-cli-plugin-apicloud （Recommend）
-
-- Run the following command
+- Install，run the following command
 
   ```shell
   $ vue add @w-xuefeng/apicloud
@@ -116,3 +85,7 @@ English | [简体中文](./README.md)
 
   - When `debugOnPC` is true, `new vue()` will be executed directly to create a page instance. At this time, all `api` related statements cannot be executed, but the page content unrelated to `api` will be displayed in the browser normally.
   
+  
+## Reference & Acknowledge 
+
+- [app-case-community/vue-cli-plugin-apicloud](https://github.com/app-case-community/vue-cli-plugin-apicloud)
