@@ -1,6 +1,6 @@
 {
   "name": "vue-apicloud-quickstart",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a simple toolkit for developing app with  vue.js in apicloud",
   "main": "dist/index.js",
   "files": ["global.d.ts", "dist", "assets"],
@@ -11,7 +11,6 @@
   "dependencies": {
     "@types/fastclick": "^1.0.28",
     "@types/js-base64": "^2.3.1",
-    "fastclick": "^1.0.6",
     "js-base64": "^2.5.1",
     "vue": "^2.6.11"
   },

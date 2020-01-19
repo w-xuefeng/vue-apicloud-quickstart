@@ -1,4 +1,3 @@
-import FastClick  from 'fastclick'
 import { PluginObject, PluginFunction } from 'vue'
 import { InstallOptions } from '../models'
 import { catchApiError } from '../utils'
@@ -18,7 +17,6 @@ const updateOrientation = () => {
 
 const init = (fn: Function) => {
   updateOrientation()
-  FastClick(document.body)
   catchApiError(fn)
   document.dispatchEvent(new MessageEvent('apiready', { data: {} }))
 }
