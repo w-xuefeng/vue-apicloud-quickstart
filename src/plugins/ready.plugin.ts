@@ -26,9 +26,9 @@ function initApiReady(debugOnPC: boolean, fn: Function) {
     return init(fn)
   } else {
     catchApiError(() => {
-      apiready = () => {
+      window.apiready = () => {
         catchApiError(() => {
-          if (api.systemType === 'ios') {
+          if (window.api.systemType === 'ios') {
             document.addEventListener('touchstart', () => {}, false)
           }
           return init(fn)
@@ -60,7 +60,7 @@ const install: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor, option
               if (apiEvent.hasOwnProperty(key)) {
                 const eventListener = apiEvent[key]
                 if (typeof eventListener === 'function') {
-                  api.addEventListener({ name: key }, (ret: any, err: any) => {
+                  window.api.addEventListener({ name: key }, (ret: any, err: any) => {
                     eventListener.bind(this).call(this, ret, err)
                   })
                 }

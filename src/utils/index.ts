@@ -39,22 +39,22 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
 
   const bindKeyBackExitApp = () => {
     if (typeof api !== 'undefined') {
-      api.addEventListener(
+      window.api.addEventListener(
         {
           name: 'keyback'
         },
         () => {
-          api.toast({
-            msg: '再按一次返回键退出' + api.appName,
+          window.api.toast({
+            msg: '再按一次返回键退出' + window.api.appName,
             duration: 2000,
             location: 'bottom'
           })
-          api.addEventListener(
+          window.api.addEventListener(
             {
               name: 'keyback'
             },
             () => {
-              api.closeWidget({ silent: true })
+              window.api.closeWidget({ silent: true })
             }
           )
           setTimeout(() => {
@@ -91,7 +91,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
       animation,
       ...(winOpts || {})
     }
-    api.openWin(params)
+    window.api.openWin(params)
   }
 
   const push = (opts: string | OpenWinOptions) => {
@@ -110,7 +110,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
       window.history.back()
       return
     }
-    api.closeWin()
+    window.api.closeWin()
   }
   
   const closeToWin = ({ url, animation }: { url: string; animation?: AnimationType }) => {
@@ -118,9 +118,9 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
     if (typeof api !== 'undefined') {
       const name = `win_${url}`
       if (animation) {
-        api.closeToWin({ name, animation })
+        window.api.closeToWin({ name, animation })
       } else {
-        api.closeToWin({ name })
+        window.api.closeToWin({ name })
       }
     } else {
       window.location.href = url
@@ -129,7 +129,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
 
   const pageParam = () => {
     if (typeof api !== 'undefined') {
-      return api.pageParam
+      return window.api.pageParam
     } else {
       const param = getQueryString('pageParam')
       return param ? JSON.parse(Base64.decode(param)) : undefined
@@ -138,7 +138,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
 
   const getSafeArea: () => { top: number; left: number; bottom: number; right: number } = () => {
     if (typeof api !== 'undefined') {
-      return api.safeArea
+      return window.api.safeArea
     } else {
       return { top: 0, left: 0, bottom: 0, right: 0 }
     }
@@ -147,8 +147,8 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
   const getWinSize: () => { winHeight: number; winWidth: number } = () => {
     if (typeof api !== 'undefined') {
       return {
-        winHeight: api.winHeight,
-        winWidth: api.winWidth
+        winHeight: window.api.winHeight,
+        winWidth: window.api.winWidth
       }
     }
     return {
@@ -159,7 +159,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
     
   const setPullDownRefresh = (fn: (ret: any, err: any) => void, options: PullDownRefreshOptions) => {
     if (typeof api !== 'undefined') {
-      api.setRefreshHeaderInfo(
+      window.api.setRefreshHeaderInfo(
         {
           visible: true,
           loadingImg: 'widget://image/refresh.png',
@@ -182,7 +182,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
     const httpUrl = url.startsWith('http:') || url.startsWith('https:') || url.startsWith('//:')
     url = url.endsWith('.html') ? url : ( httpUrl ? url : url + '.html')
     if (typeof api !== 'undefined') {
-      api.openFrame({ ...params, url })
+      window.api.openFrame({ ...params, url })
     } else {
       const { name, rect, pageParam } = params
       const iframe = document.createElement('iframe')
