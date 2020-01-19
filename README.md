@@ -8,40 +8,7 @@
 
 ## 使用方法
 
-### 单独使用
-
-- 安装
-
-  ```shell
-  $ npm i vue-apicloud-quickstart
-  ```
-- 在 main.js中 引入项目
-
-  ```js
-  import Vue from 'vue'
-  import App from './App.vue'
-  import VAQ from 'vue-apicloud-quickstart'
-  import pages from '@/config/pages'
-  // 页面配置文件，需要手动创建
-
-  Vue.config.productionTip = false
-
-  Vue
-    .use(VAQ, {
-      pages,
-      debugOnPC: true // 是否开启 PC 调试，默认 false
-    })
-    .init({
-      el: '#app',
-      render: h => h(App)
-    })
-    // 链式调用 init 方法， 即创建 Vue 实例
-    // 开启 PC 调试时与 new Vue() 等同
-    // 未开启时将在 apiready 的回调中创建 Vue 实例
-  ```
-### 配合 vue-cli-plugin-apicloud 使用（推荐）
-
-- 运行以下命令即可
+- 安装，运行以下命令即可
 
   ```shell
   $ vue add @w-xuefeng/apicloud
@@ -115,4 +82,8 @@
   - 当 `debugOnPC` 为默认值即 `false` 时, Vue 页面的实例将在 `apiready` 的 `Hooks` 中执行，因此在 PC 端浏览器内无法预览调试页面。
 
   - 当 `debugOnPC` 为 true 时，将直接执行 new Vue() 创建页面实例，此时，所有 `api` 相关的语句无法执行，但是与 `api` 无关的页面内容将会正常显示在浏览器内。
+
+## 参考致谢
+
+- [app-case-community/vue-cli-plugin-apicloud](https://github.com/app-case-community/vue-cli-plugin-apicloud)
   
