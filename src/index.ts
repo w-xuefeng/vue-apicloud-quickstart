@@ -2,7 +2,7 @@ import { InstallOptions } from './models'
 import { PluginObject, PluginFunction } from 'vue'
 import Plugins from './plugins'
 
-const install: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor, options?: InstallOptions) => {
+const installFunction: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor, options?: InstallOptions) => {
   if (!options || !options.pages) {
     throw new Error('vue-apicloud-quickstart need options with pages configuration!')
   }
@@ -15,8 +15,15 @@ const install: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor, option
   Plugins.forEach(plugin => Vue.use(plugin, options))
 }
 
-const VAQ: PluginObject<InstallOptions> = {
-  install
+export class Vaq {
+  installed = false
+  install(Vue: Vue.VueConstructor, options?: InstallOptions) {
+    if (this.installed) return
+    this.installed = true
+    return installFunction(Vue, options)
+  }
 }
 
-export default VAQ
+const vaq: PluginObject<InstallOptions> = new Vaq()
+
+export default vaq
