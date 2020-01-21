@@ -165,12 +165,15 @@ export class NetworkRequest {
       report: opts.report || this.config.report,
       cache: opts.cache || this.config.cache,
       safeMode: opts.safeMode || this.config.safeMode,
-      data: opts.data,
+      data: {
+        values: opts.data,
+        files: opts.files
+      },
       certificate: opts.certificate,
       proxy: opts.proxy,
       tag: this.tag
     }
-    if (typeof api !== undefined) {
+    if (typeof api !== "undefined") {
       return new Promise((resolve, reject) => {
         window.api.ajax(options,
           (ret: ResponseType, err: ResponseError) => {
@@ -186,11 +189,10 @@ export class NetworkRequest {
       })
     } else {
       return fetch(options.url, {
-        body: JSON.stringify(opts.data),
-        cache: 'no-cache',
-        credentials: 'include',
+        credentials: 'omit',
         headers: options.headers,
         method: options.method?.toLocaleUpperCase(),
+        body: opts.data ? JSON.stringify(opts.data) : undefined,
         mode: 'cors'
       })
     }
@@ -200,7 +202,7 @@ export class NetworkRequest {
     return this.request({ url })
   }
   post(url: string, data: any, headers?: any) {
-    return this.request({ url, data, headers })
+    return this.request({ url, data, headers, method: 'post' })
   }
 
   setBseUrl(url: string) {

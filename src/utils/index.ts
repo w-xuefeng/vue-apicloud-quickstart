@@ -211,7 +211,6 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
     }
   }
 
-  
   const toast = ({ msg, duration = 3000, location = 'bottom' }: ToastParam) => {
     if (typeof api !== 'undefined') {
       window.api.toast({ msg, duration, location })

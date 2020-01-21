@@ -1,6 +1,7 @@
 import { InstallOptions } from './models'
 import { PluginObject, PluginFunction } from 'vue'
 import Plugins from './plugins'
+import Request from './request'
 
 const installFunction: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor, options?: InstallOptions) => {
   if (!options || !options.pages) {
@@ -26,4 +27,7 @@ export class Vaq {
 
 const vaq: PluginObject<InstallOptions> = new Vaq()
 
+export {
+  Request
+}
 export default vaq
