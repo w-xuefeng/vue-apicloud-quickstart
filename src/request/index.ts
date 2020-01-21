@@ -12,19 +12,21 @@ interface RequestConfig {
 }
 
 interface ResponseReturnAll {
-  statusCode: number;
-  headers: any;
-  body: any;
+  statusCode?: number;
+  headers?: any;
+  body?: any;
 }
 
 interface ResponseUpload {
-  progress: number;
-  status: 0 | 1 | 2;
+  progress?: number;
+  status?: 0 | 1 | 2;
   // 上传状态，数字类型。（0：上传中、1：上传完成、2：上传失败）
-  body: any;
+  body?: any;
 }
 
-type ResponseType = ResponseReturnAll | ResponseUpload
+interface ResponseType extends ResponseReturnAll, ResponseUpload {
+  [any: string]: any;
+}
 
 interface ResponseError {
   statusCode: number;
@@ -194,7 +196,15 @@ export class NetworkRequest {
         method: options.method?.toLocaleUpperCase(),
         body: opts.data ? JSON.stringify(opts.data) : undefined,
         mode: 'cors'
-      }).then(rs => rs.json())
+      })
+      .then(rs => rs.json())
+      .then((rs: ResponseType) => {
+        this.afterReauest(rs)
+        return rs
+      })
+      .catch((err: ResponseError) => {
+        this.handleError(err)
+      })
     }
   }
 
