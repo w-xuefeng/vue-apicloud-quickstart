@@ -194,7 +194,7 @@ export class NetworkRequest {
         method: options.method?.toLocaleUpperCase(),
         body: opts.data ? JSON.stringify(opts.data) : undefined,
         mode: 'cors'
-      })
+      }).then(rs => rs.json())
     }
   }
 
