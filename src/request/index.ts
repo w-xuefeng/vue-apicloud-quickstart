@@ -50,6 +50,7 @@ export class NetworkRequest {
   private defaultCache = false;
   private defaultSafeMode: 'none' = 'none';
   config: RequestConfig;
+  requestOptions: RequestConfig = {};
 
   constructor(opts = {}) {
     this.config = {
@@ -153,8 +154,7 @@ export class NetworkRequest {
    */
   request(opts: RequestConfig) {
     this.tag = opts.tag || `ajax-${new Date().getTime()}`
-    this.interceptor(opts)
-    const options = {
+    this.requestOptions = {
       url: opts.url.startsWith('http')
         ? opts.url
         : `${this.baseUrl}${opts.url}`,
@@ -175,9 +175,10 @@ export class NetworkRequest {
       proxy: opts.proxy,
       tag: this.tag
     }
+    this.interceptor(opts)
     if (typeof api !== "undefined") {
       return new Promise((resolve, reject) => {
-        window.api.ajax(options,
+        window.api.ajax(this.requestOptions,
           (ret: ResponseType, err: ResponseError) => {
             if (ret) {
               this.afterReauest(ret)
@@ -190,10 +191,11 @@ export class NetworkRequest {
         )
       })
     } else {
-      return fetch(options.url, {
+      const { url, headers, method = 'get' } = this.requestOptions
+      return fetch(url, {
         credentials: 'omit',
-        headers: options.headers,
-        method: options.method?.toLocaleUpperCase(),
+        headers: headers,
+        method: method.toLocaleUpperCase(),
         body: opts.data ? JSON.stringify(opts.data) : undefined,
         mode: 'cors'
       })
