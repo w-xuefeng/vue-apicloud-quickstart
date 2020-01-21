@@ -1,5 +1,5 @@
 import { Base64 } from 'js-base64'
-import { WindowParams, FrameParams, PageConfig, InstallOptions, AnimationType, PullDownRefreshOptions  } from '../models'
+import { WindowParams, FrameParams, PageConfig, InstallOptions, AnimationType, PullDownRefreshOptions, ToastParam  } from '../models'
 
 interface Page extends PageConfig {
   htmlPath: string;
@@ -211,10 +211,46 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
     }
   }
 
+  
+  const toast = ({ msg, duration = 3000, location = 'bottom' }: ToastParam) => {
+    if (typeof api !== 'undefined') {
+      window.api.toast({ msg, duration, location })
+      return
+    }
+    const vlocation = location === 'bottom' ? 'bottom: 10%;' : (location === 'top' ? 'top: 10%;' : 'top: 50%;')
+    const toastElement = document.createElement('div')
+    toastElement.innerHTML = msg
+    toastElement.style.cssText = `
+     ${vlocation};
+      max-width:60%;
+      min-width:150px;
+      padding:0 14px;
+      height: 40px;
+      color: rgb(255, 255, 255);
+      line-height: 40px;
+      text-align: center;
+      border-radius: 4px;
+      position: fixed;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 999999;
+      background: rgba(0, 0, 0, 0.75);
+      font-size: 16px;
+    `
+    document.body.appendChild(toastElement)
+    setTimeout(() => {
+      const delay = 0.5
+      toastElement.style.webkitTransition = `-webkit-transform ${delay}s ease-in, opacity ${delay}s ease-in`
+      toastElement.style.opacity = '0'
+      setTimeout(() => { document.body.removeChild(toastElement) }, delay * 1000)
+    }, duration)
+  }
+
   return {
     page: { open, push, close, closeToWin, pageParam },
     frame: { open: openFrame },
     pagesInfo: Object.keys(getPageMap()).map(k => ({ ...getPageMap()[k]})),
+    toast,
     getPageMap,
     getQueryString,
     bindKeyBackExitApp,
