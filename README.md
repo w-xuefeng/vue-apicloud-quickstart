@@ -46,7 +46,7 @@
   - 页面配置文件 `pages.js`， 结构如下
 
     ```js
-    const pages = [
+    module.exports = [
       {
         title: '开屏广告页',
         name: 'index',
@@ -64,7 +64,6 @@
       }
     ];
 
-    module.exports = pages
     ```
 
 - 2 PC 端调试

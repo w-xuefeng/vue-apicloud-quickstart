@@ -48,7 +48,7 @@ English | [简体中文](./README.md)
   - The page configuration file `pages.js` has the following structure
 
     ```js
-    const pages = [
+    module.exports = [
       {
         title: 'advertisingPage',
         name: 'index',
@@ -66,7 +66,6 @@ English | [简体中文](./README.md)
       }
     ];
 
-    module.exports = pages
     ```
 
 - 2 Debugging on PC

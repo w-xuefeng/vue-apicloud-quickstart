@@ -13,3 +13,10 @@ export interface PullDownRefreshOptions {
   textUp: string;
   showTime: boolean;
 }
+
+export interface ToastParam {
+  msg: string;
+  duration: number;
+  location: 'top' | 'middle' | 'bottom' ;
+  global?: boolean;
+}
