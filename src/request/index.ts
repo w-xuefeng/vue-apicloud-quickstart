@@ -121,7 +121,7 @@ export class NetworkRequest {
     }
     if (typeof api !== "undefined") {
       const isContinue = this.interceptor(this.requestOptions)
-      if (!isContinue) return
+      if (!isContinue) return new Promise((resolve, reject) => reject(isContinue))
       return new Promise((resolve, reject) => {
         window.api.ajax(this.requestOptions,
           (ret: ResponseType, err: ResponseError) => {
@@ -139,7 +139,7 @@ export class NetworkRequest {
       this.tag = typeof this.tag === 'string' ? axios.CancelToken.source() : this.tag
       this.requestOptions.tag = this.tag
       const isContinue = this.interceptor(this.requestOptions)
-      if (!isContinue) return
+      if (!isContinue) return new Promise((resolve, reject) => reject(isContinue))
       return axios.request({
         url: this.requestOptions.url,
         method: this.requestOptions.method,
