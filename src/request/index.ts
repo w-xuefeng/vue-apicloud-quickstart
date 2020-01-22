@@ -1,4 +1,6 @@
-interface RequestConfig {
+export interface RequestConfig {
+  url: string;
+  data?: any;
   method?: 'get'| 'post'| 'put'| 'delete'| 'head'| 'options'| 'trace'| 'patch';
   timeout?: number;
   headers?: any;
@@ -11,24 +13,24 @@ interface RequestConfig {
   [any: string]: any;
 }
 
-interface ResponseReturnAll {
+export interface ResponseReturnAll {
   statusCode?: number;
   headers?: any;
   body?: any;
 }
 
-interface ResponseUpload {
+export interface ResponseUpload {
   progress?: number;
   status?: 0 | 1 | 2;
   // 上传状态，数字类型。（0：上传中、1：上传完成、2：上传失败）
   body?: any;
 }
 
-interface ResponseType extends ResponseReturnAll, ResponseUpload {
+export interface ResponseType extends ResponseReturnAll, ResponseUpload {
   [any: string]: any;
 }
 
-interface ResponseError {
+export interface ResponseError {
   statusCode: number;
   code: 0 | 1 | 2 | 3 | 4;
   // 错误码，数字类型。（0：连接错误、1：超时、2：授权错误、3：数据类型错误、4：不安全的数据）
@@ -40,34 +42,25 @@ interface ResponseError {
 export class NetworkRequest {
   private baseUrl = '';
   private tag = '';
-  private defaultHeaders = {};
-  private defaultTimeout = 30;
-  private defaultMethod: 'get' = 'get';
-  private defaultReturnAll = false;
-  private defaultDataType: 'json' = 'json';
-  private defaultCharset = 'utf-8';
-  private defaultReport = false;
-  private defaultCache = false;
-  private defaultSafeMode: 'none' = 'none';
-  config: RequestConfig;
-  requestOptions: RequestConfig = {};
+  requestOptions: RequestConfig;
 
-  constructor(opts = {}) {
-    this.config = {
-      method: this.defaultMethod,
-      timeout: this.defaultTimeout,
-      headers: this.defaultHeaders,
-      dataType: this.defaultDataType,
-      returnAll: this.defaultReturnAll,
-      charset: this.defaultCharset,
-      report: this.defaultReport,
-      cache: this.defaultCache,
-      safeMode: this.defaultSafeMode,
+  constructor(opts?: RequestConfig) {
+    this.requestOptions = {
+      url: '',
+      headers: {},
+      method: 'get',
+      timeout: 30,
+      dataType: 'json',
+      returnAll: false,
+      charset: 'utf-8',
+      report: false,
+      cache: false,
+      safeMode: 'none',
       ...opts
     }
   }
 
-  interceptor(opts: any) {
+  interceptor(opts: RequestConfig) {
     // 请求拦截器
     return opts
   }
@@ -153,29 +146,19 @@ export class NetworkRequest {
    * }
    */
   request(opts: RequestConfig) {
+    const httpUrl = opts.url.startsWith('http:') || opts.url.startsWith('https:') || opts.url.startsWith('//:')
     this.tag = opts.tag || `ajax-${new Date().getTime()}`
     this.requestOptions = {
-      url: opts.url.startsWith('http')
-        ? opts.url
-        : `${this.baseUrl}${opts.url}`,
-      method: opts.method || this.config.method,
-      timeout: opts.timeout || this.config.timeout,
-      dataType: opts.dataType || this.config.dataType,
-      returnAll: opts.returnAll || this.config.returnAll,
-      headers: opts.headers || this.config.headers,
-      charset: opts.charset || this.config.charset,
-      report: opts.report || this.config.report,
-      cache: opts.cache || this.config.cache,
-      safeMode: opts.safeMode || this.config.safeMode,
+      ...this.requestOptions,
+      ...opts,
+      tag: this.tag,
+      url: httpUrl ? opts.url : `${this.baseUrl}${opts.url}`,
       data: {
         values: opts.data,
         files: opts.files
-      },
-      certificate: opts.certificate,
-      proxy: opts.proxy,
-      tag: this.tag
+      }
     }
-    this.interceptor(opts)
+    this.interceptor(this.requestOptions)
     if (typeof api !== "undefined") {
       return new Promise((resolve, reject) => {
         window.api.ajax(this.requestOptions,
@@ -193,11 +176,9 @@ export class NetworkRequest {
     } else {
       const { url, headers, method = 'get' } = this.requestOptions
       return fetch(url, {
-        credentials: 'omit',
         headers: headers,
         method: method.toLocaleUpperCase(),
         body: opts.data ? JSON.stringify(opts.data) : undefined,
-        mode: 'cors'
       })
       .then(rs => rs.json())
       .then((rs: ResponseType) => {
