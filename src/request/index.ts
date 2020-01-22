@@ -3,7 +3,7 @@ import axios, { CancelTokenSource } from 'axios'
 export class NetworkRequest {
   private baseUrl = '';
   private tag: string | CancelTokenSource = '' ;
-  requestOptions: RequestConfig;
+  public requestOptions: RequestConfig;
 
   constructor(opts?: RequestConfig) {
     this.requestOptions = {
