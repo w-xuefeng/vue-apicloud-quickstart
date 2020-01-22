@@ -107,13 +107,13 @@ export class NetworkRequest {
    * }
    */
   request(opts: RequestConfig) {
-    const httpUrl = opts.url.startsWith('http:') || opts.url.startsWith('https:') || opts.url.startsWith('//:')
+    const isHttpUrl = (url: string): boolean => ['https://', 'http://', '//'].some(e => url.startsWith(e))
     this.tag = opts.tag || this.tag || `ajax-${new Date().getTime()}`
     this.requestOptions = {
       ...this.requestOptions,
       ...opts,
       tag: this.tag,
-      url: httpUrl ? opts.url : `${this.baseUrl}${opts.url}`,
+      url: isHttpUrl(opts.url) ? opts.url : `${this.baseUrl}${opts.url}`,
       data: {
         values: opts.data,
         files: opts.files
