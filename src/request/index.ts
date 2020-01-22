@@ -1,73 +1,27 @@
-interface RequestConfig {
-  method?: 'get'| 'post'| 'put'| 'delete'| 'head'| 'options'| 'trace'| 'patch';
-  timeout?: number;
-  headers?: any;
-  dataType?: 'json' | 'text';
-  returnAll?: boolean;
-  charset?: string;
-  report?: boolean;
-  cache?: boolean;
-  safeMode?: 'none'| 'both'| 'request'| 'response';
-  [any: string]: any;
-}
-
-interface ResponseReturnAll {
-  statusCode?: number;
-  headers?: any;
-  body?: any;
-}
-
-interface ResponseUpload {
-  progress?: number;
-  status?: 0 | 1 | 2;
-  // 上传状态，数字类型。（0：上传中、1：上传完成、2：上传失败）
-  body?: any;
-}
-
-interface ResponseType extends ResponseReturnAll, ResponseUpload {
-  [any: string]: any;
-}
-
-interface ResponseError {
-  statusCode: number;
-  code: 0 | 1 | 2 | 3 | 4;
-  // 错误码，数字类型。（0：连接错误、1：超时、2：授权错误、3：数据类型错误、4：不安全的数据）
-  msg: string;
-  body: any;
-}
-
-
+import { RequestConfig, ResponseError, ResponseType } from './model'
+import axios, { CancelTokenSource } from 'axios'
 export class NetworkRequest {
   private baseUrl = '';
-  private tag = '';
-  private defaultHeaders = {};
-  private defaultTimeout = 30;
-  private defaultMethod: 'get' = 'get';
-  private defaultReturnAll = false;
-  private defaultDataType: 'json' = 'json';
-  private defaultCharset = 'utf-8';
-  private defaultReport = false;
-  private defaultCache = false;
-  private defaultSafeMode: 'none' = 'none';
-  config: RequestConfig;
-  requestOptions: RequestConfig = {};
+  private tag: string | CancelTokenSource = '' ;
+  requestOptions: RequestConfig;
 
-  constructor(opts = {}) {
-    this.config = {
-      method: this.defaultMethod,
-      timeout: this.defaultTimeout,
-      headers: this.defaultHeaders,
-      dataType: this.defaultDataType,
-      returnAll: this.defaultReturnAll,
-      charset: this.defaultCharset,
-      report: this.defaultReport,
-      cache: this.defaultCache,
-      safeMode: this.defaultSafeMode,
+  constructor(opts?: RequestConfig) {
+    this.requestOptions = {
+      url: '',
+      headers: {},
+      method: 'get',
+      timeout: 30,
+      dataType: 'json',
+      returnAll: false,
+      charset: 'utf-8',
+      report: false,
+      cache: false,
+      safeMode: 'none',
       ...opts
     }
   }
 
-  interceptor(opts: any) {
+  interceptor(opts: RequestConfig) {
     // 请求拦截器
     return opts
   }
@@ -153,30 +107,21 @@ export class NetworkRequest {
    * }
    */
   request(opts: RequestConfig) {
-    this.tag = opts.tag || `ajax-${new Date().getTime()}`
+    const httpUrl = opts.url.startsWith('http:') || opts.url.startsWith('https:') || opts.url.startsWith('//:')
+    this.tag = opts.tag || this.tag || `ajax-${new Date().getTime()}`
     this.requestOptions = {
-      url: opts.url.startsWith('http')
-        ? opts.url
-        : `${this.baseUrl}${opts.url}`,
-      method: opts.method || this.config.method,
-      timeout: opts.timeout || this.config.timeout,
-      dataType: opts.dataType || this.config.dataType,
-      returnAll: opts.returnAll || this.config.returnAll,
-      headers: opts.headers || this.config.headers,
-      charset: opts.charset || this.config.charset,
-      report: opts.report || this.config.report,
-      cache: opts.cache || this.config.cache,
-      safeMode: opts.safeMode || this.config.safeMode,
+      ...this.requestOptions,
+      ...opts,
+      tag: this.tag,
+      url: httpUrl ? opts.url : `${this.baseUrl}${opts.url}`,
       data: {
         values: opts.data,
         files: opts.files
-      },
-      certificate: opts.certificate,
-      proxy: opts.proxy,
-      tag: this.tag
+      }
     }
-    this.interceptor(opts)
     if (typeof api !== "undefined") {
+      const isContinue = this.interceptor(this.requestOptions)
+      if (!isContinue) return
       return new Promise((resolve, reject) => {
         window.api.ajax(this.requestOptions,
           (ret: ResponseType, err: ResponseError) => {
@@ -191,21 +136,37 @@ export class NetworkRequest {
         )
       })
     } else {
-      const { url, headers, method = 'get' } = this.requestOptions
-      return fetch(url, {
-        credentials: 'omit',
-        headers: headers,
-        method: method.toLocaleUpperCase(),
-        body: opts.data ? JSON.stringify(opts.data) : undefined,
-        mode: 'cors'
+      this.tag = typeof this.tag === 'string' ? axios.CancelToken.source() : this.tag
+      this.requestOptions.tag = this.tag
+      const isContinue = this.interceptor(this.requestOptions)
+      if (!isContinue) return
+      return axios.request({
+        url: this.requestOptions.url,
+        method: this.requestOptions.method,
+        baseURL: this.baseUrl,
+        headers: this.requestOptions.headers,
+        data: this.requestOptions.data.values,
+        /**
+         * 超时时间
+         * 单位：毫秒
+         */
+        timeout: (this.requestOptions.timeout || 30) * 1000,
+        // 'proxy' 定义代理服务器的主机名称和端口
+        // `auth` 表示 HTTP 基础验证应当用于连接代理，并提供凭据
+        // 这将会设置一个 `Proxy-Authorization` 头，覆写掉已有的通过使用 `header` 设置的自定义 `Proxy-Authorization` 头。
+        proxy: this.requestOptions.proxy,
+
+        // `cancelToken` 指定用于取消请求的 cancel token
+        // （查看后面的 Cancellation 这节了解更多）
+        cancelToken: (this.tag as CancelTokenSource).token
       })
-      .then(rs => rs.json())
-      .then((rs: ResponseType) => {
+      .then(rs => rs.data)
+      .then((rs) => {
         this.afterReauest(rs)
         return rs
       })
-      .catch((err: ResponseError) => {
-        this.handleError(err)
+      .catch((err) => {
+        return this.handleError(err)
       })
     }
   }
@@ -222,15 +183,23 @@ export class NetworkRequest {
   }
 
   setTag(tag: string) {
-    this.tag = tag
+    if (typeof api !== 'undefined') {
+      this.tag = tag
+    } else {
+      this.tag = axios.CancelToken.source()
+    }
   }
 
   getTag() {
     return this.tag
   }
 
-  cancelAjax(tag: string) {
-    window.api.cancelAjax({ tag })
+  cancelAjax(tag: string, msg?: string) {
+    if (typeof api !== 'undefined') {
+      window.api.cancelAjax({ tag })
+    } else {
+      (this.tag as CancelTokenSource).cancel(msg)
+    }
   }
 }
 
