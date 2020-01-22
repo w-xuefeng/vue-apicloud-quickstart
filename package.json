@@ -11,6 +11,7 @@
   "scripts": {
     "build": "tsc --build tsconfig.json",
     "lint": "eslint --fix -c .eslintrc.js --ext .js,.ts ./src",
+    "prebuild": "npm run lint",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
