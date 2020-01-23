@@ -16,7 +16,7 @@ const installFunction: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor
   Plugins.forEach(plugin => Vue.use(plugin, options))
 }
 
-export class Vaq {
+class Vaq {
   installed = false
   install(Vue: Vue.VueConstructor, options?: InstallOptions) {
     if (this.installed) return
@@ -28,6 +28,8 @@ export class Vaq {
 const vaq: PluginObject<InstallOptions> = new Vaq()
 
 export {
-  Request
+  Request,
+  Vaq
 }
+
 export default vaq
