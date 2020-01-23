@@ -13,17 +13,36 @@ English | [简体中文](./README_zh.md)
 
 ## Usage
 
-### Use alone
-
-- Install，run the following command
+- This project is based on [w-xuefeng/vue-cli-plugin-apicloud](https://github.com/w-xuefeng/vue-cli-plugin-apicloud), run the following command to install
 
   ```shell
   $ vue add @w-xuefeng/apicloud
   ```
 
-## Explain
+## Explanation
 
-- 1 Page configuration
+- In the `main.js`, you can configure options of `plugin` including `pages` and `debugOnPC`
+
+  ```js
+  import App from './App.vue'
+  import Vue from 'vue'
+  import VAQ from 'vue-apicloud-quickstart'
+  import pages from '@/config/pages'
+
+  Vue.config.productionTip = false
+
+  Vue
+    .use(VAQ, {
+      pages,
+      debugOnPC: true
+    })
+    .init({
+      el: '#app',
+      render: h => h(App)
+    })
+  ```
+
+- 1 `pages`: Page configuration
 
   - Create the `pages` directory and the `config` directory under the `src` directory, assuming that there are existing open screen ad pages
 `index/index.vue`, login page `login/index.vue` and application home page `home/index.vue`, the directory structure is as follows:
@@ -73,7 +92,7 @@ English | [简体中文](./README_zh.md)
 
     ```
 
-- 2 Debugging on PC
+- 2 `debugOnPC`: Debugging on PC
 
   - Recommended scenarios 
 
@@ -92,4 +111,5 @@ English | [简体中文](./README_zh.md)
   
 ## Reference & Acknowledge 
 
+- [vuejs/vue-cli](https://github.com/vuejs/vue-cli)
 - [app-case-community/vue-cli-plugin-apicloud](https://github.com/app-case-community/vue-cli-plugin-apicloud)
