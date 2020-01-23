@@ -2,7 +2,14 @@
   <img width="200" src="./assets/logo.png">
   <h1>vue-apicloud-quickstart</h1> 
   <p>使用 Vue.js + APICloud 开发移动端应用的起手式</p>
+
+[![Github Action](https://github.com/w-xuefeng/vue-apicloud-quickstart/workflows/Node%20CI/badge.svg?branch=master)](https://github.com/w-xuefeng/vue-apicloud-quickstart)
+[![npm](https://img.shields.io/npm/v/vue-apicloud-quickstart?style=flat)](https://www.npmjs.com/package/vue-apicloud-quickstart)
+[![npm](https://img.shields.io/npm/dt/vue-apicloud-quickstart?style=flat)](https://www.npmjs.com/package/vue-apicloud-quickstart)
+
+
 </div>
+
 
 [English](./README_EN.md) | 简体中文
 
