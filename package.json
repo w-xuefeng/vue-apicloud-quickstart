@@ -1,15 +1,21 @@
 {
   "name": "vue-apicloud-quickstart",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "a simple toolkit for developing app with  vue.js in apicloud",
   "main": "dist/index.js",
-  "files": ["global.d.ts", "dist", "assets"],
+  "files": [
+    "global.d.ts",
+    "dist",
+    "assets"
+  ],
   "scripts": {
     "build": "tsc --build tsconfig.json",
     "lint": "eslint --fix -c .eslintrc.js --ext .js,.ts ./src",
+    "prebuild": "npm run lint",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "axios": "^0.19.1",
     "js-base64": "^2.5.1",
     "vue": "^2.6.11"
   },

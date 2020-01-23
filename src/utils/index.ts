@@ -19,6 +19,8 @@ interface OpenWinOptions {
 const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
   const { pages } = opts
 
+  const isHttpUrl = (url: string): boolean => ['https://', 'http://', '//'].some(e => url.startsWith(e))
+
   const getPageMap: () => ObjectMap<Page> = () => {
     return pages.reduce((rst: ObjectMap<Page>, page: PageConfig ) => {
       rst[page.name] = {
@@ -74,8 +76,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
   }
 
   const open = (url: string, { name, pageParam, animation, winOpts }: OpenWinOptions = {}) => {
-    const httpUrl = url.startsWith('http:') || url.startsWith('https:') || url.startsWith('//:')
-    url = url.endsWith('.html') ? url : ( httpUrl ? url : url + '.html')
+    url = url.endsWith('.html') ? url : ( isHttpUrl(url) ? url : url + '.html')
     if (typeof api === 'undefined') {
       if (pageParam) {
         url = `${url}?pageParam=${Base64.encodeURI(JSON.stringify(pageParam))}`
@@ -179,8 +180,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
 
   const openFrame = (params: FrameParams) => {
     let { url } = params
-    const httpUrl = url.startsWith('http:') || url.startsWith('https:') || url.startsWith('//:')
-    url = url.endsWith('.html') ? url : ( httpUrl ? url : url + '.html')
+    url = url.endsWith('.html') ? url : ( isHttpUrl(url) ? url : url + '.html')
     if (typeof api !== 'undefined') {
       window.api.openFrame({ ...params, url })
     } else {

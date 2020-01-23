@@ -2,6 +2,11 @@
   <img width="200" src="./assets/logo.png">
   <h1>vue-apicloud-quickstart</h1>
   <p> The start up of using vue.js + apicloud to develop mobile applications</p>
+
+[![Github Action](https://github.com/w-xuefeng/vue-apicloud-quickstart/workflows/Node%20CI/badge.svg?branch=master)](https://github.com/w-xuefeng/vue-apicloud-quickstart)
+[![npm](https://img.shields.io/npm/v/vue-apicloud-quickstart?style=flat)](https://www.npmjs.com/package/vue-apicloud-quickstart)
+[![npm](https://img.shields.io/npm/dt/vue-apicloud-quickstart?style=flat)](https://www.npmjs.com/package/vue-apicloud-quickstart)
+
 </div>
 
 English | [简体中文](./README.md)
