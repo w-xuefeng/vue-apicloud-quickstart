@@ -178,7 +178,7 @@ export class NetworkRequest {
     return this.request({ url, data, headers, method: 'post' })
   }
 
-  setBseUrl(url: string) {
+  setBaseUrl(url: string) {
     this.baseUrl = url
   }
 
