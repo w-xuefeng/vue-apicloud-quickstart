@@ -13,7 +13,7 @@ English | [简体中文](./README_zh.md)
 
 ## Usage
 
-- Install，run the following command
+- This project is based on [w-xuefeng/vue-cli-plugin-apicloud](https://github.com/w-xuefeng/vue-cli-plugin-apicloud), run the following command to install
 
   ```shell
   $ vue add @w-xuefeng/apicloud
