@@ -15,7 +15,7 @@
 
 ## 使用方法
 
-- 安装，运行以下命令即可
+- 本项目以 [w-xuefeng/vue-cli-plugin-apicloud](https://github.com/w-xuefeng/vue-cli-plugin-apicloud) 作为基础, 运行以下命令即可
 
   ```shell
   $ vue add @w-xuefeng/apicloud
@@ -23,7 +23,28 @@
 
 ## 说明
 
-- 1 页面配置
+- 在 `main.js` 中，可以配置 `plugin` 的参数，其中包括 `pages` 和 `debugOnPC`
+
+  ```js
+  import App from './App.vue'
+  import Vue from 'vue'
+  import VAQ from 'vue-apicloud-quickstart'
+  import pages from '@/config/pages'
+
+  Vue.config.productionTip = false
+
+  Vue
+    .use(VAQ, {
+      pages,
+      debugOnPC: true
+    })
+    .init({
+      el: '#app',
+      render: h => h(App)
+    })
+  ```
+
+- 1 `pages`: 页面配置
 
   - 在 `src` 目录下建立 `pages` 目录，和 `config` 目录，假设现有开屏广告页 
   `index/index.vue`、登录页面 `login/index.vue` 和 应用首页 `home/index.vue`， 其目录结构如下所示：
@@ -73,7 +94,7 @@
 
     ```
 
-- 2 PC 端调试
+- 2 `debugOnPC`: PC 端调试
 
   - 推荐使用场景
 
@@ -91,5 +112,6 @@
 
 ## 参考致谢
 
+- [vuejs/vue-cli](https://github.com/vuejs/vue-cli)
 - [app-case-community/vue-cli-plugin-apicloud](https://github.com/app-case-community/vue-cli-plugin-apicloud)
   
