@@ -69,7 +69,7 @@ const install: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor, option
           }
         }, {
           cn: 'apiEvent 只能在移动设备上执行',
-          en: 'apiEvent can only be run on mobile devices'
+          en: 'apiEvent can be run on mobile devices only'
         })
         _self._isApiready = true
         if (_self._isMounted) {
