@@ -54,12 +54,12 @@ English | [简体中文](./README_zh.md)
     |   |   |
     |   |   ├── index
     |   |   |   |
-    |   |   |   ├── index.vue    # Open screen advertising page
-    |   |   |   |
+    |   |   |   └── index.vue    # Open screen advertising page
+    |   |   |
     |   |   ├── login
     |   |   |   |
-    |   |   |   ├── index.vue    # Login page
-    |   |   |   |
+    |   |   |   └── index.vue    # Login page
+    |   |   |
     |   |   └── home
     |   |       |
     |   |       └── index.vue    # APP home page
