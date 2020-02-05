@@ -4,7 +4,7 @@
   <p>使用 Vue.js + APICloud 开发移动端应用的起手式</p>
 
 [![Github Action](https://github.com/w-xuefeng/vue-apicloud-quickstart/workflows/Node%20CI/badge.svg?branch=master)](https://github.com/w-xuefeng/vue-apicloud-quickstart)
-[![Github Action](https://github.com/w-xuefeng/vaq-docs/workflows/Docs%20Deploy/badge.svg?branch=master)](https://vaq.wangxuefeng.com.cn)
+[![Github Action](https://github.com/w-xuefeng/vaq-docs/workflows/Docs%20Deploy/badge.svg?branch=master)](https://vaq.wangxuefeng.com.cn/zh/)
 [![npm](https://img.shields.io/npm/v/vue-apicloud-quickstart?style=flat)](https://www.npmjs.com/package/vue-apicloud-quickstart)
 [![npm](https://img.shields.io/npm/dt/vue-apicloud-quickstart?style=flat)](https://www.npmjs.com/package/vue-apicloud-quickstart)
 
@@ -14,7 +14,7 @@
 
 [English](./README.md) | 简体中文
 
-## [查看文档](https://vaq.wangxuefeng.com.cn)
+## [查看文档](https://vaq.wangxuefeng.com.cn/zh/)
 
 ## 使用方法
 
