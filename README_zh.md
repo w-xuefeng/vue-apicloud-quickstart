@@ -4,6 +4,7 @@
   <p>使用 Vue.js + APICloud 开发移动端应用的起手式</p>
 
 [![Github Action](https://github.com/w-xuefeng/vue-apicloud-quickstart/workflows/Node%20CI/badge.svg?branch=master)](https://github.com/w-xuefeng/vue-apicloud-quickstart)
+[![Github Action](https://github.com/w-xuefeng/vaq-docs/workflows/Docs%20Deploy/badge.svg?branch=master)](https://vaq.wangxuefeng.com.cn)
 [![npm](https://img.shields.io/npm/v/vue-apicloud-quickstart?style=flat)](https://www.npmjs.com/package/vue-apicloud-quickstart)
 [![npm](https://img.shields.io/npm/dt/vue-apicloud-quickstart?style=flat)](https://www.npmjs.com/package/vue-apicloud-quickstart)
 
@@ -12,6 +13,8 @@
 
 
 [English](./README.md) | 简体中文
+
+## [查看文档](https://vaq.wangxuefeng.com.cn)
 
 ## 使用方法
 
@@ -56,12 +59,12 @@
     |   |   |
     |   |   ├── index
     |   |   |   |
-    |   |   |   ├── index.vue    # 开屏广告页
-    |   |   |   |
+    |   |   |   └── index.vue    # 开屏广告页
+    |   |   |
     |   |   ├── login
     |   |   |   |
-    |   |   |   ├── index.vue    # 登录页
-    |   |   |   |
+    |   |   |   └── index.vue    # 登录页
+    |   |   |
     |   |   └── home
     |   |       |
     |   |       └── index.vue    # 应用首页
