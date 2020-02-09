@@ -39,7 +39,7 @@
   Vue
     .use(VAQ, {
       pages,
-      debugOnPC: true
+      // debugOnPC: process.env.NODE_ENV !== 'production '
     })
     .init({
       el: '#app',
@@ -106,6 +106,8 @@
     - 后期开发功能，调试功能时将 debugOnPC 设置为 false，在自定义Loader中调试
 
     - 或者也可以始终将 debugOnPC 设置为 false，在自定义Loader中调试
+
+    - 注意：确保在编译构建的时候 debugOnPC 为 false，否则最终打包后会影响正常运行
 
   - 因为 APICloud 会在 APPLoader 或者 自定义 Loader 中向 `window` 上注入全局变量 `api`, 所以在移动端设备上使用 Loader 调试时可以通过 `api` 来实现调用原生模块的能力。为保证调用原生模块时都已经初始化完成，所有调用原生模块的语句都应该放在 `apiready` 的 `Hooks` 中执行。
 
