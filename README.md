@@ -37,7 +37,7 @@ English | [简体中文](./README_zh.md)
   Vue
     .use(VAQ, {
       pages,
-      debugOnPC: true
+      // debugOnPC: process.env.NODE_ENV !== 'production '
     })
     .init({
       el: '#app',
@@ -105,6 +105,8 @@ English | [简体中文](./README_zh.md)
 
     - Or you can always set debugOnPC to false and debug in custom Loader.
 
+    - Note: Make sure debugOnPC is false when compiling and building, otherwise it will affect normal operation after final packaging
+    
   - Because apicloud will inject global variables `api `into `window` in apploader or custom loader, the ability to call native modules can be realized through `api` when using loader debugging on mobile devices. To ensure that the initialization is completed when calling the native module, all statements calling the native module should be executed in hooks of `apiready`.
 
   - When `debugOnPC` is the default value `false`, the instance of Vue page will execute in hooks of `apiready`, so the debugging page cannot be previewed in PC browser.

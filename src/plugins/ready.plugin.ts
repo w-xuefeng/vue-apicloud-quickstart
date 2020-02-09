@@ -29,7 +29,7 @@ function initApiReady(debugOnPC: boolean, fn: Function) {
       window.apiready = () => {
         catchApiError(() => {
           if (window.api.systemType === 'ios') {
-            document.addEventListener('touchstart', () => {}, false)
+            document.addEventListener('touchstart', () => { }, false)
           }
           return init(fn)
         })
@@ -38,13 +38,16 @@ function initApiReady(debugOnPC: boolean, fn: Function) {
   }
 }
 
-const install: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor, options?: InstallOptions) => {
+const install: PluginFunction<InstallOptions> = (
+  Vue: Vue.VueConstructor,
+  options?: InstallOptions
+) => {
   function initApp(opts: any) {
     return initApiReady(!!options?.debugOnPC, () => new Vue(opts))
   }
   Object.defineProperty(Vue, 'init', {
     value: initApp
-  })  
+  })
   Vue.mixin({
     beforeCreate() {
       const { debugOnPC = false } = options || {}
@@ -53,32 +56,41 @@ const install: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor, option
       _self._isApiready = false
       _self._debugOnPC = debugOnPC
       document.addEventListener('apiready', () => {
-        catchApiError(() => {
-          if ('apiEvent' in vmOptions) {
-            const apiEvent = vmOptions.apiEvent
-            for (const key in apiEvent) {
-              if (apiEvent.hasOwnProperty(key)) {
-                const eventListener = apiEvent[key]
-                if (typeof eventListener === 'function') {
-                  window.api.addEventListener({ name: key }, (ret: any, err: any) => {
-                    eventListener.bind(this).call(this, ret, err)
-                  })
+        catchApiError(
+          () => {
+            if ('apiEvent' in vmOptions) {
+              const apiEvent = vmOptions.apiEvent
+              for (const key in apiEvent) {
+                if (apiEvent.hasOwnProperty(key)) {
+                  const eventListener = apiEvent[key]
+                  const [handle, param] =
+                    typeof eventListener === 'function'
+                      ? [eventListener, { name: key }]
+                      : [
+                        eventListener.handle,
+                        { name: key, extra: eventListener.extra }
+                      ]
+                  if (typeof handle === 'function') {
+                    window.api.addEventListener(param, (ret: any, err: any) => {
+                      handle.bind(this).call(this, ret, err)
+                    })
+                  }
                 }
               }
             }
+          },
+          {
+            cn: 'apiEvent 只能在移动设备上执行',
+            en: 'apiEvent can be run on mobile devices only'
           }
-        }, {
-          cn: 'apiEvent 只能在移动设备上执行',
-          en: 'apiEvent can be run on mobile devices only'
-        })
+        )
         _self._isApiready = true
         if (_self._isMounted) {
           _self.__ready()
         }
       })
       document.addEventListener('updateOrientation', () => {
-        vmOptions.onWindowChange &&
-          vmOptions.onWindowChange.bind(this).call()
+        vmOptions.onWindowChange && vmOptions.onWindowChange.bind(this).call()
       })
     },
     mounted() {
