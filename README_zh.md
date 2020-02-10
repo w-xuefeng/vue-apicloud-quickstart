@@ -23,6 +23,13 @@
   ```shell
   $ vue add @w-xuefeng/apicloud
   ```
+  
+  或者
+    
+  ``` shell
+  $ npm i @w-xuefeng/apicloud     # 或者使用 yarn
+  $ vue invoke @w-xuefeng/apicloud
+  ```
 
 ## 说明
 

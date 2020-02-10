@@ -162,8 +162,7 @@ export class NetworkRequest {
       })
       .then(rs => rs.data)
       .then((rs) => {
-        this.afterReauest(rs)
-        return rs
+        return this.afterReauest(rs)
       })
       .catch((err) => {
         return this.handleError(err)
@@ -174,6 +173,7 @@ export class NetworkRequest {
   get(url: string) {
     return this.request({ url })
   }
+
   post(url: string, data: any, headers?: any) {
     return this.request({ url, data, headers, method: 'post' })
   }
