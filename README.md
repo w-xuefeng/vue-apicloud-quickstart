@@ -25,7 +25,7 @@ English | [简体中文](./README_zh.md)
   or
     
   ``` shell
-  $ npm i @w-xuefeng/apicloud     # or use yarn
+  $ npm i @w-xuefeng/vue-cli-plugin-apicloud     # or use yarn
   $ vue invoke @w-xuefeng/apicloud
   ```
 

@@ -27,7 +27,7 @@
   或者
     
   ``` shell
-  $ npm i @w-xuefeng/apicloud     # 或者使用 yarn
+  $ npm i @w-xuefeng/vue-cli-plugin-apicloud     # 或者使用 yarn
   $ vue invoke @w-xuefeng/apicloud
   ```
 
