@@ -26,9 +26,9 @@ function initApiReady(debugOnPC: boolean, fn: Function) {
     return init(fn)
   } else {
     catchApiError(() => {
-      window.apiready = () => {
+      apiready = () => {
         catchApiError(() => {
-          if (window.api.systemType === 'ios') {
+          if (api.systemType === 'ios') {
             document.addEventListener('touchstart', () => { }, false)
           }
           return init(fn)
@@ -71,7 +71,7 @@ const install: PluginFunction<InstallOptions> = (
                         { name: key, extra: eventListener.extra }
                       ]
                   if (typeof handle === 'function') {
-                    window.api.addEventListener(param, (ret: any, err: any) => {
+                    api.addEventListener(param, (ret: any, err: any) => {
                       handle.bind(this).call(this, ret, err)
                     })
                   }
