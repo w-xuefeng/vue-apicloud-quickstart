@@ -47,7 +47,7 @@ export class NetworkRequest {
    *     body 上传完成时，服务器返回的数据。若 dataType 为 json，那么 body 为 JSON 对象，否则为字符串
    * 
    */
-  afterReauest(ret: ResponseType) {
+  afterRequest(ret: ResponseType) {
     // 请求成功后的回调
     return ret
   }
@@ -126,8 +126,7 @@ export class NetworkRequest {
         window.api.ajax(this.requestOptions,
           (ret: ResponseType, err: ResponseError) => {
             if (ret) {
-              this.afterReauest(ret)
-              return resolve(ret)
+              return resolve(this.afterRequest(ret))
             } else {
               this.handleError(err)
               return reject(err)
@@ -162,7 +161,7 @@ export class NetworkRequest {
       })
       .then(rs => rs.data)
       .then((rs) => {
-        return this.afterReauest(rs)
+        return this.afterRequest(rs)
       })
       .catch((err) => {
         return this.handleError(err)
