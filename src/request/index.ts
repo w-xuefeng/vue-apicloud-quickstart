@@ -126,8 +126,7 @@ export class NetworkRequest {
         window.api.ajax(this.requestOptions,
           (ret: ResponseType, err: ResponseError) => {
             if (ret) {
-              this.afterReauest(ret)
-              return resolve(ret)
+              return resolve(this.afterReauest(ret))
             } else {
               this.handleError(err)
               return reject(err)
