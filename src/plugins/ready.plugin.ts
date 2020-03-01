@@ -26,7 +26,7 @@ function initApiReady(debugOnPC: boolean, fn: Function) {
     return init(fn)
   } else {
     catchApiError(() => {
-      apiready = () => {
+      window.apiready = () => {
         catchApiError(() => {
           if (api.systemType === 'ios') {
             document.addEventListener('touchstart', () => { }, false)
