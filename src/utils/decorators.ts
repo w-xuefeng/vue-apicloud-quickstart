@@ -20,7 +20,7 @@ export const APIEvent = (extra?: { extra: any; [any: string]: any }) => {
 }
 
 export const VueAPICloud = (target: any) => {
-  const { methods } = target.options
+  const { methods = {} } = target.options
   if (methods.onWindowChange && typeof methods.onWindowChange === 'function') {
     target.options = {
       ...target.options,
