@@ -1,11 +1,12 @@
 {
   "name": "vue-apicloud-quickstart",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "a simple toolkit for developing app with  vue.js in apicloud",
   "main": "dist/index.js",
   "files": [
     "dist",
     "assets",
+    "src",
     "types"
   ],
   "scripts": {
