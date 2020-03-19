@@ -32,6 +32,8 @@ English | [简体中文](./README_zh.md)
 
 ## Explanation
 
+- `Typescript` Supported
+
 - In the `main.js`, you can configure options of `plugin` including `pages` and `debugOnPC`
 
   ```js

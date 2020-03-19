@@ -33,6 +33,8 @@
 
 ## 说明
 
+- 已支持 `Typescript`
+
 - 在 `main.js` 中，可以配置 `plugin` 的参数，其中包括 `pages` 和 `debugOnPC`
 
   ```js
