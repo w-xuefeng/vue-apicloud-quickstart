@@ -159,11 +159,11 @@ export class NetworkRequest {
         // （查看后面的 Cancellation 这节了解更多）
         cancelToken: (this.tag as CancelTokenSource).token
       })
-      .then(rs => rs.data)
-      .then((rs) => {
+      .then((rs: any) => rs.data)
+      .then((rs: any) => {
         return this.afterRequest(rs)
       })
-      .catch((err) => {
+      .catch((err: any) => {
         return this.handleError(err)
       })
     }
