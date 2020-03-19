@@ -1,37 +1,36 @@
-export const APIEvent = (extra?: { extra: any }) => {
+export const APIEvent = (extra?: { extra: any; [any: string]: any }) => {
   return (target: any, key: string) => {
-    if (typeof target.methods[key] === 'function') {
-      let apiEvent = {}
+    if (typeof target[key] === 'function') {
+      const oldEvents = target.$apiEventOptions || {}
+      let newEvent = {}
       if (extra) {
-        apiEvent = {
-          extra,
-          handel: target.methods[key]
+        newEvent = {
+          ...extra,
+          handel: target[key]
         }
       } else {
-        apiEvent = target.methods[key]
+        newEvent = target[key]
       }
-      target.$options = {
-        ...target.$options,
-        apiEvent: {
-          ...target.$options.apiEvent,
-          apiEvent
-        }
+      target.$apiEventOptions = {
+        ...oldEvents,
+        [key]: newEvent
       }
     }
   }
 }
 
 export const VueAPICloud = (target: any) => {
-  if (target.methods.onWindowChange && typeof target.methods.onWindowChange === 'function') {
-    target.$options = {
-      ...target.$options,
-      onWindowChange: target.methods.onWindowChange
+  const { methods } = target.options
+  if (methods.onWindowChange && typeof methods.onWindowChange === 'function') {
+    target.options = {
+      ...target.options,
+      onWindowChange: methods.onWindowChange
     }
   }
-  if (target.methods.onReady && typeof target.methods.onReady === 'function') {
-    target.$options = {
-      ...target.$options,
-      onReady: target.methods.onReady
+  if (methods.onReady && typeof methods.onReady === 'function') {
+    target.options = {
+      ...target.options,
+      onReady: methods.onReady
     }
   }
 }

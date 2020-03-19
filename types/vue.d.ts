@@ -5,7 +5,7 @@ import { NetworkRequest } from '../src/request'
 
 declare module 'vue/types/vue' {
   interface VueConstructor {
-    init?: (opts: Record<string, any>) => void;
+    init: (opts: Record<string, any>) => void;
   }
 
   interface Vue {
@@ -26,7 +26,7 @@ declare module 'vue/types/vue' {
       title: string;
       path: string;
     }[];
-    $toast: ({ msg, duration, location }: ToastParam) => void;
+    $toast: (toastParam: ToastParam) => void;
     $getPageMap: () => ObjectMap<Page>;
     $getQueryString: (name: string) => string | null;
     $bindKeyBackExitApp: () => void;
