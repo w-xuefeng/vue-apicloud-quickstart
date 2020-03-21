@@ -1,15 +1,15 @@
 import { Base64 } from 'js-base64'
-import { WindowParams, FrameParams, PageConfig, InstallOptions, AnimationType, PullDownRefreshOptions, ToastParam  } from '../models'
+import { WindowParams, FrameParams, PageConfig, InstallOptions, AnimationType, PullDownRefreshOptions, ToastParam } from '../models'
 
-interface Page extends PageConfig {
+export interface Page extends PageConfig {
   htmlPath: string;
 }
 
-interface ObjectMap<T> {
+export interface ObjectMap<T> {
   [any: string]: T;
 }
 
-interface OpenWinOptions {
+export interface OpenWinOptions {
   name?: string;
   pageParam?: any;
   animation?: AnimationType;
@@ -22,7 +22,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
   const isHttpUrl = (url: string): boolean => ['https://', 'http://', '//'].some(e => url.startsWith(e))
 
   const getPageMap: () => ObjectMap<Page> = () => {
-    return pages.reduce((rst: ObjectMap<Page>, page: PageConfig ) => {
+    return pages.reduce((rst: ObjectMap<Page>, page: PageConfig) => {
       rst[page.name] = {
         ...page,
         htmlPath: page.path.replace(/\/(\w)/, (match: any, $1: string) =>
@@ -76,7 +76,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
   }
 
   const open = (url: string, { name, pageParam, animation, winOpts }: OpenWinOptions = {}) => {
-    url = url.endsWith('.html') ? url : ( isHttpUrl(url) ? url : url + '.html')
+    url = url.endsWith('.html') ? url : (isHttpUrl(url) ? url : url + '.html')
     if (typeof api === 'undefined') {
       if (pageParam) {
         url = `${url}?pageParam=${Base64.encodeURI(JSON.stringify(pageParam))}`
@@ -113,7 +113,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
     }
     window.api.closeWin()
   }
-  
+
   const closeToWin = ({ url, animation }: { url: string; animation?: AnimationType }) => {
     url = url.endsWith('.html') ? url : url + '.html'
     if (typeof api !== 'undefined') {
@@ -157,7 +157,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
       winWidth: window.screen.availWidth
     }
   }
-    
+
   const setPullDownRefresh = (fn: (ret: any, err: any) => void, options: PullDownRefreshOptions) => {
     if (typeof api !== 'undefined') {
       window.api.setRefreshHeaderInfo(
@@ -180,7 +180,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
 
   const openFrame = (params: FrameParams) => {
     let { url } = params
-    url = url.endsWith('.html') ? url : ( isHttpUrl(url) ? url : url + '.html')
+    url = url.endsWith('.html') ? url : (isHttpUrl(url) ? url : url + '.html')
     if (typeof api !== 'undefined') {
       window.api.openFrame({ ...params, url })
     } else {
@@ -248,7 +248,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
   return {
     page: { open, push, close, closeToWin, pageParam },
     frame: { open: openFrame },
-    pagesInfo: Object.keys(getPageMap()).map(k => ({ ...getPageMap()[k]})),
+    pagesInfo: Object.keys(getPageMap()).map(k => ({ ...getPageMap()[k] })),
     toast,
     getPageMap,
     getQueryString,
@@ -257,7 +257,7 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
     getSafeArea,
     getWinSize,
     setPullDownRefresh
-  }  
+  }
 }
 
 export const apiError = ['api is not defined', 'apiready is not defined']

@@ -16,7 +16,7 @@ export interface PullDownRefreshOptions {
 
 export interface ToastParam {
   msg: string;
-  duration: number;
-  location: 'top' | 'middle' | 'bottom' ;
+  duration?: number;
+  location?: 'top' | 'middle' | 'bottom' ;
   global?: boolean;
 }

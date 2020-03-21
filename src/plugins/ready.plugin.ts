@@ -26,7 +26,7 @@ function initApiReady(debugOnPC: boolean, fn: Function) {
     return init(fn)
   } else {
     catchApiError(() => {
-      apiready = () => {
+      window.apiready = () => {
         catchApiError(() => {
           if (api.systemType === 'ios') {
             document.addEventListener('touchstart', () => { }, false)
@@ -53,13 +53,13 @@ const install: PluginFunction<InstallOptions> = (
       const { debugOnPC = false } = options || {}
       const _self: any = this
       const vmOptions: any = this.$options
+      const $apiEventOptions = _self.$apiEventOptions || {}
       _self._isApiready = false
       _self._debugOnPC = debugOnPC
       document.addEventListener('apiready', () => {
         catchApiError(
           () => {
-            if ('apiEvent' in vmOptions) {
-              const apiEvent = vmOptions.apiEvent
+            const addAPIEventListener = (apiEvent: Record<string, { extra: any; handle: Function } | Function>) => {
               for (const key in apiEvent) {
                 if (apiEvent.hasOwnProperty(key)) {
                   const eventListener = apiEvent[key]
@@ -76,7 +76,14 @@ const install: PluginFunction<InstallOptions> = (
                     })
                   }
                 }
-              }
+              }              
+            }
+            if ('apiEvent' in vmOptions) {
+              const apiEvent = vmOptions.apiEvent
+              addAPIEventListener(apiEvent)
+            }
+            if (Object.keys($apiEventOptions).length > 0) {
+              addAPIEventListener($apiEventOptions)
             }
           },
           {

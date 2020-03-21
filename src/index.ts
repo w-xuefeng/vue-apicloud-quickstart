@@ -2,6 +2,7 @@ import { InstallOptions } from './models'
 import { PluginObject, PluginFunction } from 'vue'
 import Plugins from './plugins'
 import Request, { NetworkRequest } from './request'
+import { VueAPICloud, APIEvent } from './utils/decorators'
 
 const installFunction: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor, options?: InstallOptions) => {
   if (!options || !options.pages) {
@@ -16,7 +17,7 @@ const installFunction: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor
   Plugins.forEach(plugin => Vue.use(plugin, options))
 }
 
-class Vaq {
+class VueApicloudQuickstart {
   installed = false
   install(Vue: Vue.VueConstructor, options?: InstallOptions) {
     if (this.installed) return
@@ -25,12 +26,14 @@ class Vaq {
   }
 }
 
-const vaq: PluginObject<InstallOptions> = new Vaq()
+const vaq: PluginObject<InstallOptions> = new VueApicloudQuickstart()
 
 export {
   Request,
   NetworkRequest,
-  Vaq
+  VueApicloudQuickstart,
+  APIEvent,
+  VueAPICloud
 }
 
 export default vaq

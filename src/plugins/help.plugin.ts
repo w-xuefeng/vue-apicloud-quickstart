@@ -7,7 +7,7 @@ import '../utils/api'
 const install: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor, options?: InstallOptions) => {
   if (options) {
     const helpFuncs = HelpFunc(options)
-      Object.keys(helpFuncs).forEach(funcName => {
+    Object.keys(helpFuncs).forEach(funcName => {
       Object.defineProperty(Vue.prototype, `$${funcName}`, {
         get() {
           return helpFuncs[funcName]
