@@ -2,6 +2,8 @@ import { PluginObject, PluginFunction } from 'vue'
 import { InstallOptions } from '../models'
 import { catchApiError } from '../utils'
 
+const noop = () => {}
+
 const updateOrientation = () => {
   const update = function () {
     setTimeout(function () {
@@ -15,27 +17,22 @@ const updateOrientation = () => {
   window.addEventListener('orientationchange', update, false)
 }
 
-const init = (fn: Function) => {
-  updateOrientation()
-  catchApiError(fn)
-  document.dispatchEvent(new MessageEvent('apiready', { data: {} }))
-}
-
-function initApiReady(debugOnPC: boolean, fn: Function) {
-  if (debugOnPC) {
-    return init(fn)
-  } else {
-    catchApiError(() => {
-      window.apiready = () => {
-        catchApiError(() => {
-          if (api.systemType === 'ios') {
-            document.addEventListener('touchstart', () => { }, false)
-          }
-          return init(fn)
-        })
-      }
-    })
-  }
+const initApiReady = (debugOnPC: boolean) => {
+  return new Promise((resolve: (value: any) => void) => {
+    window.apiready = () => {
+      return catchApiError(() => {
+        updateOrientation()
+        document.dispatchEvent(new MessageEvent('apiready', { data: {} }))
+        if (typeof api !== 'undefined' && api.systemType === 'ios') {
+          document.addEventListener('touchstart', noop, false)
+        }
+        resolve(debugOnPC)
+      })
+    }
+    if (typeof api === 'undefined' && debugOnPC) {
+      window.apiready()
+    }
+  })
 }
 
 const install: PluginFunction<InstallOptions> = (
@@ -43,7 +40,7 @@ const install: PluginFunction<InstallOptions> = (
   options?: InstallOptions
 ) => {
   function initApp(opts: any) {
-    return initApiReady(!!options?.debugOnPC, () => new Vue(opts))
+    return initApiReady(!!options?.debugOnPC).then(() => new Vue(opts))
   }
   Object.defineProperty(Vue, 'init', {
     value: initApp

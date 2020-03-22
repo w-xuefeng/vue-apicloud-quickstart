@@ -277,9 +277,9 @@ export const handelApiError = (error: Error, msg?: { cn: string; en: string }) =
 
 export const catchApiError = (fn: Function, msg?: { cn: string; en: string }) => {
   try {
-    fn()
+    return fn()
   } catch (error) {
-    handelApiError(error, msg)
+    return handelApiError(error, msg)
   }
 }
 

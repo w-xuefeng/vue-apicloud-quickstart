@@ -14,6 +14,9 @@ const installFunction: PluginFunction<InstallOptions> = (Vue: Vue.VueConstructor
   if (options.pages.length === 0) {
     throw new Error('pages configuration can not be empty array!')
   }
+  if (process.env.NODE_ENV === 'production') {
+    options.debugOnPC = false
+  }
   Plugins.forEach(plugin => Vue.use(plugin, options))
 }
 
