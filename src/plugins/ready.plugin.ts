@@ -50,7 +50,6 @@ const install: PluginFunction<InstallOptions> = (
       const { debugOnPC = false } = options || {}
       const _self: any = this
       const vmOptions: any = this.$options
-      const $apiEventOptions = _self.$apiEventOptions || {}
       _self._isApiready = false
       _self._debugOnPC = debugOnPC
       document.addEventListener('apiready', () => {
@@ -73,8 +72,9 @@ const install: PluginFunction<InstallOptions> = (
                     })
                   }
                 }
-              }              
+              }
             }
+            const { $apiEventOptions = {} } = _self.$data || {}
             if ('apiEvent' in vmOptions) {
               const apiEvent = vmOptions.apiEvent
               addAPIEventListener(apiEvent)
