@@ -41,7 +41,7 @@
   import App from './App.vue'
   import Vue from 'vue'
   import VAQ from 'vue-apicloud-quickstart'
-  import pages from '@/config/pages'
+  import pages from '@/config/pages.json'
 
   Vue.config.productionTip = false
 
@@ -80,30 +80,34 @@
     |   |
     │   └── config               # 配置入口
     |       |
-    |       └── pages.js         # 页面配置文件
+    |       └── pages.json       # 页面配置文件
     ```
 
-  - 页面配置文件 `pages.js`， 结构如下
+  - 页面配置文件 `pages.json`， 结构如下
 
-    ```js
-    module.exports = [
+    ```json
+    [
       {
-        title: '开屏广告页',
-        name: 'index',
-        path: 'index/index'
+        "title": "开屏广告页",
+        "name": "index",
+        "path": "index/index"
       },
       {
-        title: '登录页',
-        name: 'login',
-        path: 'login/index'
+        "title": "登录页",
+        "name": "login",
+        "path": "login/index"
       },
       {
-        title: '应用首页',
-        name: 'home',
-        path: 'home/index'
+        "title": "应用首页",
+        "name": "home",
+        "path": "home/index"
+      },
+      {
+        "title": "web页面",
+        "name": "web",
+        "path": "home/web"
       }
-    ];
-
+    ]
     ```
 
 - 2 `debugOnPC`: PC 端调试

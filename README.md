@@ -40,7 +40,7 @@ English | [简体中文](./README_zh.md)
   import App from './App.vue'
   import Vue from 'vue'
   import VAQ from 'vue-apicloud-quickstart'
-  import pages from '@/config/pages'
+  import pages from '@/config/pages.json'
 
   Vue.config.productionTip = false
 
@@ -79,30 +79,34 @@ English | [简体中文](./README_zh.md)
     |   |
     │   └── config               # Configuration entry
     |       |
-    |       └── pages.js         # Page profile
+    |       └── pages.json       # Page profile
     ```
 
-  - The page configuration file `pages.js` has the following structure
+  - The page configuration file `pages.json` has the following structure
 
-    ```js
-    module.exports = [
+    ```json
+    [
       {
-        title: 'advertisingPage',
-        name: 'index',
-        path: 'index/index'
+        "title": "advertisingPage",
+        "name": "index",
+        "path": "index/index"
       },
       {
-        title: 'loginPage',
-        name: 'login',
-        path: 'login/index'
+        "title": "loginPage",
+        "name": "login",
+        "path": "login/index"
       },
       {
-        title: 'homePage',
-        name: 'home',
-        path: 'home/index'
+        "title": "homePage",
+        "name": "home",
+        "path": "home/index"
+      },
+      {
+        "title": "webPage",
+        "name": "web",
+        "path": "home/web"
       }
-    ];
-
+    ]
     ```
 
 - 2 `debugOnPC`: Debugging on PC
