@@ -58,7 +58,7 @@ English | [简体中文](./README_zh.md)
 - 1 `pages`: Page configuration
 
   - Create the `pages` directory and the `config` directory under the `src` directory, assuming that there are existing open screen ad pages
-`index/index.vue`, login page `login/index.vue` and application home page `home/index.vue`, the directory structure is as follows:
+`index/index.vue`, login page `login/index.vue` and application home page `home/index.vue`、webview page `home/web.vue`, the directory structure is as follows:
 
     ```
     ├── src
@@ -72,14 +72,17 @@ English | [简体中文](./README_zh.md)
     |   |   ├── login
     |   |   |   |
     |   |   |   └── index.vue    # Login page
-    |   |   |
+    |   |   |    
     |   |   └── home
     |   |       |
-    |   |       └── index.vue    # APP home page
+    |   |       ├── index.vue    # APP home page
+    |   |       |
+    |   |       └── web.vue      # Webview page
     |   |
     │   └── config               # Configuration entry
     |       |
     |       └── pages.json       # Page profile
+    |
     ```
 
   - The page configuration file `pages.json` has the following structure

@@ -59,7 +59,7 @@
 - 1 `pages`: 页面配置
 
   - 在 `src` 目录下建立 `pages` 目录，和 `config` 目录，假设现有开屏广告页 
-  `index/index.vue`、登录页面 `login/index.vue` 和 应用首页 `home/index.vue`， 其目录结构如下所示：
+  `index/index.vue`、登录页面 `login/index.vue` 和 应用首页 `home/index.vue`、访问 Web 链接的页面 `home/web.vue`， 其目录结构如下所示：
 
     ```
     ├── src
@@ -73,10 +73,12 @@
     |   |   ├── login
     |   |   |   |
     |   |   |   └── index.vue    # 登录页
-    |   |   |
+    |   |   |    
     |   |   └── home
     |   |       |
-    |   |       └── index.vue    # 应用首页
+    |   |       ├── index.vue    # 应用首页
+    |   |       |
+    |   |       └── web.vue      # web 页面
     |   |
     │   └── config               # 配置入口
     |       |
