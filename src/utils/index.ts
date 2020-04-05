@@ -283,4 +283,20 @@ export const catchApiError = (fn: Function, msg?: { cn: string; en: string }) =>
   }
 }
 
+export const bringFunc = (funcName: string | string[], from: Record<string, Function>, to: Record<string, any>) => {
+  const res = { ...to }
+  if (Array.isArray(funcName)) {
+    for (const func of funcName) {
+      if (from[func] && typeof from[func] === 'function') {
+        res[func] = from[func]
+      }
+    }
+  } else {
+    if (from[funcName] && typeof from[funcName] === 'function') {
+      res[funcName] = from[funcName]
+    }
+  }
+  return res
+}
+
 export default helpFunc
