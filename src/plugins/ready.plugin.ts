@@ -7,11 +7,7 @@ const noop = () => {}
 const updateOrientation = () => {
   const update = function () {
     setTimeout(function () {
-      document.dispatchEvent(
-        new MessageEvent('updateOrientation', {
-          data: {}
-        })
-      )
+      document.dispatchEvent(new MessageEvent('updateOrientation'))
     }, 200)
   }
   window.addEventListener('orientationchange', update, false)
@@ -22,7 +18,6 @@ const initApiReady = (debugOnPC: boolean) => {
     window.apiready = () => {
       return catchApiError(() => {
         updateOrientation()
-        document.dispatchEvent(new MessageEvent('apiready', { data: {} }))
         if (typeof api !== 'undefined' && api.systemType === 'ios') {
           document.addEventListener('touchstart', noop, false)
         }
@@ -40,10 +35,14 @@ const install: PluginFunction<InstallOptions> = (
   options?: InstallOptions
 ) => {
   function initApp(opts: any) {
-    return initApiReady(!!options?.debugOnPC).then(() => new Vue(opts))
+    return initApiReady(!!options?.debugOnPC)
+      .then(() => new Vue(opts))
+      .then(
+        (vm) => (document.dispatchEvent(new MessageEvent('apiEventReady')), vm)
+      )
   }
   Object.defineProperty(Vue, 'init', {
-    value: initApp
+    value: initApp,
   })
   Vue.mixin({
     beforeCreate() {
@@ -52,10 +51,15 @@ const install: PluginFunction<InstallOptions> = (
       const vmOptions: any = this.$options
       _self._isApiready = false
       _self._debugOnPC = debugOnPC
-      document.addEventListener('apiready', () => {
+      document.addEventListener('apiEventReady', () => {
         catchApiError(
           () => {
-            const addAPIEventListener = (apiEvent: Record<string, { extra: any; handle: Function } | Function>) => {
+            const addAPIEventListener = (
+              apiEvent: Record<
+                string,
+                { extra: any; handle: Function } | Function
+              >
+            ) => {
               for (const key in apiEvent) {
                 if (apiEvent.hasOwnProperty(key)) {
                   const eventListener = apiEvent[key]
@@ -63,9 +67,9 @@ const install: PluginFunction<InstallOptions> = (
                     typeof eventListener === 'function'
                       ? [eventListener, { name: key }]
                       : [
-                        eventListener.handle,
-                        { name: key, extra: eventListener.extra }
-                      ]
+                          eventListener.handle,
+                          { name: key, extra: eventListener.extra },
+                        ]
                   if (typeof handle === 'function') {
                     api.addEventListener(param, (ret: any, err: any) => {
                       handle.bind(this).call(this, ret, err)
@@ -85,7 +89,7 @@ const install: PluginFunction<InstallOptions> = (
           },
           {
             cn: 'apiEvent 只能在移动设备上执行',
-            en: 'apiEvent can be run on mobile devices only'
+            en: 'apiEvent can be run on mobile devices only',
           }
         )
         _self._isApiready = true
@@ -120,13 +124,13 @@ const install: PluginFunction<InstallOptions> = (
             _self.$options.onReady.bind(this).call()
           })
         }
-      }
-    }
+      },
+    },
   })
 }
 
 const ReadyPlugin: PluginObject<InstallOptions> = {
-  install
+  install,
 }
 
 export default ReadyPlugin

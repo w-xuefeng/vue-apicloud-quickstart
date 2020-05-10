@@ -5,7 +5,7 @@ import { NetworkRequest } from '../src/request'
 
 declare module 'vue/types/vue' {
   interface VueConstructor {
-    init: (opts: Record<string, any>) => Promise<CombinedVueInstance<Vue, object, object, object, Record<'then', any>>>;
+    init: (opts: Record<string, any>) => Promise<CombinedVueInstance<Vue, object, object, object, object>>;
   }
 
   interface Vue {
