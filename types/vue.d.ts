@@ -42,11 +42,18 @@ declare module 'vue/types/vue' {
       winWidth: number;
     };
     $setPullDownRefresh: (fn: (ret: any, err: any) => void, options: PullDownRefreshOptions) => void;
+    $randomColor: (opts?: { rgb?: boolean; opacity?: number | 'random'  }) => string;
+    $isLightColor: (color?: string) => boolean;
   }
 }
 
 declare module 'vue/types/options' {
   interface ComponentOptions<V extends Vue> {
+    statusBar?: {
+      color: string;
+      style?: 'dark' | 'light';
+      animated?: boolean;
+    } | string;
     apiEvent?: Record<string, { extra: any; handle: Function } | Function>;
     onReady?: Function;
     onWindowChange?: Function;

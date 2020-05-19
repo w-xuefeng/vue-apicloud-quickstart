@@ -245,6 +245,41 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
     }, duration)
   }
 
+  const randomColor = (opts?: { rgb?: boolean; opacity?: number | 'random'  }) => {
+    const { rgb = false, opacity = 1 } = opts || {}
+    const a = opacity === 'random' ? Number(Math.random().toFixed(3)) : (opacity > 1 || opacity < 0 ? 1 : opacity)
+    const r = Math.floor(Math.random() * 256)
+    const g = Math.floor(Math.random() * 256)
+    const b = Math.floor(Math.random() * 256)
+    let color = `#${r.toString(16)}${g.toString(16)}${b.toString(16)}`
+    if (rgb) {
+      color = a === 1 ? `rgb(${r},${g},${b})`:  `rgba(${r},${g},${b},${a})`
+    }
+    return color
+  }
+
+  const isLightColor = (color?: string) => {
+    let colorR = 255
+    let colorG = 255
+    let colorB = 255
+    if (color && color.includes('#')) {
+      color = color.substring(1)
+      color = color.length === 3 ? color + color : color
+      colorR = parseInt(color[0] + color[1], 16)
+      colorG = parseInt(color[2] + color[3], 16)
+      colorG = parseInt(color[4] + color[5], 16)
+    }
+
+    if (color && color.includes('rgb')) {
+      const colors = color.replace(/rgb[a]?\(([\w\W]+)\)/, ($0, $1) => $1).split(',')
+      colorR = parseInt(color[0])
+      colorG = parseInt(colors[1])
+      colorB = parseInt(colors[2])
+    }
+
+    return (0.213 * colorR + 0.715 * colorG + 0.072 * colorB > 255 / 2)
+  }
+
   return {
     page: { open, push, close, closeToWin, pageParam },
     frame: { open: openFrame },
@@ -256,7 +291,9 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
     n2p,
     getSafeArea,
     getWinSize,
-    setPullDownRefresh
+    setPullDownRefresh,
+    randomColor,
+    isLightColor
   }
 }
 

@@ -79,9 +79,27 @@ const install: PluginFunction<InstallOptions> = (
               }
             }
             const { $apiEventOptions = {} } = _self.$data || {}
+            const statusBar: {
+              color: string;
+              style?: 'dark' | 'light';
+              animated?: boolean;
+            } | string = vmOptions.statusBar || {}
             if ('apiEvent' in vmOptions) {
               const apiEvent = vmOptions.apiEvent
               addAPIEventListener(apiEvent)
+            }
+            if (typeof statusBar === 'string') {
+              api.setStatusBarStyle({
+                color: statusBar,
+                style: this.$isLightColor(statusBar) ? 'dark' : 'light'
+              })
+            }
+            if (typeof statusBar === 'object' && statusBar.color) {
+              api.setStatusBarStyle({
+                color: statusBar.color,
+                style: statusBar.style ? statusBar.style : (this.$isLightColor(statusBar.color) ? 'dark' : 'light'),
+                animated: !!statusBar.animated
+              })
             }
             if (Object.keys($apiEventOptions).length > 0) {
               addAPIEventListener($apiEventOptions)
