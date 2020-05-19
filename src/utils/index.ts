@@ -161,16 +161,15 @@ const helpFunc = (opts: InstallOptions): ObjectMap<any> => {
   const setPullDownRefresh = (fn: (ret: any, err: any) => void, options: PullDownRefreshOptions) => {
     if (typeof api !== 'undefined') {
       window.api.setRefreshHeaderInfo(
-        {
+        Object.assign({
           visible: true,
           loadingImg: 'widget://image/refresh.png',
           bgColor: '#282c34',
           textColor: '#fff',
           textDown: '下拉刷新...',
           textUp: '松开刷新...',
-          showTime: true,
-          ...options
-        },
+          showTime: true
+        }, options),
         (ret: any, err: any) => {
           fn && fn(ret, err)
         }
