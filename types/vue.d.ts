@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { FrameParams, AnimationType, PullDownRefreshOptions, ToastParam  } from '../src/models'
+import { FrameParams, AnimationType, PullDownRefreshOptions, ToastParam, StatusBar  } from '../src/models'
 import { OpenWinOptions, ObjectMap, Page } from '../src/utils'
 import { NetworkRequest } from '../src/request'
 
@@ -49,11 +49,7 @@ declare module 'vue/types/vue' {
 
 declare module 'vue/types/options' {
   interface ComponentOptions<V extends Vue> {
-    statusBar?: {
-      color: string;
-      style?: 'dark' | 'light';
-      animated?: boolean;
-    } | string;
+    statusBar?: StatusBar;
     apiEvent?: Record<string, { extra: any; handle: Function } | Function>;
     onReady?: Function;
     onWindowChange?: Function;

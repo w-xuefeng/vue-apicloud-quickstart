@@ -3,6 +3,7 @@ import FrameParams from './FrameParams'
 import PageConfig from './PageConfig'
 import InstallOptions from './InstallOptions'
 import { AnimationType, PullDownRefreshOptions, ToastParam } from './MethodsParams'
+import { StatusBarConfig, StatusBar } from './StatusBar'
 
 export {
   WindowParams,
@@ -11,5 +12,7 @@ export {
   InstallOptions,
   AnimationType,
   ToastParam,
-  PullDownRefreshOptions
+  PullDownRefreshOptions,
+  StatusBarConfig,
+  StatusBar,
 }
