@@ -1,5 +1,5 @@
 import { PluginObject, PluginFunction } from 'vue'
-import { InstallOptions, StatusBar } from '../models'
+import { InstallOptions } from '../models'
 import { catchApiError } from '../utils'
 
 const noop = () => {}
@@ -78,24 +78,10 @@ const install: PluginFunction<InstallOptions> = (
                 }
               }
             }
-            const { $apiEventOptions = {} } = _self.$data || {}
-            const statusBar: StatusBar = vmOptions.statusBar || {}
+            const { $apiEventOptions = {} } = _self.$data || {}            
             if ('apiEvent' in vmOptions) {
               const apiEvent = vmOptions.apiEvent
               addAPIEventListener(apiEvent)
-            }
-            if (typeof statusBar === 'string') {
-              api.setStatusBarStyle({
-                color: statusBar,
-                style: this.$isLightColor(statusBar) ? 'dark' : 'light'
-              })
-            }
-            if (typeof statusBar === 'object' && statusBar.color) {
-              api.setStatusBarStyle({
-                color: statusBar.color,
-                style: statusBar.style ? statusBar.style : (this.$isLightColor(statusBar.color) ? 'dark' : 'light'),
-                animated: !!statusBar.animated
-              })
             }
             if (Object.keys($apiEventOptions).length > 0) {
               addAPIEventListener($apiEventOptions)
@@ -120,10 +106,6 @@ const install: PluginFunction<InstallOptions> = (
       _self._isMounted = true
       if (_self._isApiready) {
         _self.__ready()
-      } else {
-        setTimeout(() => {
-          _self.__ready()
-        }, 200)
       }
     },
     methods: {

@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import { FrameParams, AnimationType, PullDownRefreshOptions, ToastParam, StatusBar  } from '../src/models'
-import { OpenWinOptions, ObjectMap, Page } from '../src/utils'
+import {
+  OpenWinOptions,
+  ObjectMap,
+  Page,
+  SafeArea,
+} from '../src/utils/helpFunc'
 import { NetworkRequest } from '../src/request'
 
 declare module 'vue/types/vue' {
@@ -15,6 +20,7 @@ declare module 'vue/types/vue' {
     $page: {
       open: (url: string, { name, pageParam, animation, winOpts }?: OpenWinOptions) => void;
       push: (opts: string | OpenWinOptions) => void;
+      replace: (opts: string | OpenWinOptions) => void;
       close: () => void;
       closeToWin: ({ url, animation }: { url: string; animation?: AnimationType | undefined }) => void;
       pageParam: () => any;
@@ -31,12 +37,7 @@ declare module 'vue/types/vue' {
     $getQueryString: (name: string) => string | null;
     $bindKeyBackExitApp: () => void;
     $n2p: (name: string) => string | undefined;
-    $getSafeArea: () => {
-      top: number;
-      left: number;
-      bottom: number;
-      right: number;
-    };
+    $getSafeArea: () => SafeArea;
     $getWinSize: () => {
       winHeight: number;
       winWidth: number;
@@ -44,6 +45,7 @@ declare module 'vue/types/vue' {
     $setPullDownRefresh: (fn: (ret: any, err: any) => void, options: PullDownRefreshOptions) => void;
     $randomColor: (opts?: { rgb?: boolean; opacity?: number | 'random'  }) => string;
     $isLightColor: (color?: string) => boolean;
+    $setStatusBarStyle: (statusBar: StatusBar) => void;
   }
 }
 
