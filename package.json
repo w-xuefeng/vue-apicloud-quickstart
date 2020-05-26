@@ -16,7 +16,9 @@
     "prepublishOnly": "npm run build",
     "test:js": "cd ./test/js && npm run serve",
     "test:ts": "cd ./test/ts && npm run serve",
-    "test": "npm run test:ts"
+    "test": "npm run test:ts",
+    "install-test:js": "cd ./test/js && npm install",
+    "install-test:ts": "cd ./test/ts && npm install"
   },
   "dependencies": {
     "@types/js-base64": "^2.3.1",
