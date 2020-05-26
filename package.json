@@ -17,15 +17,20 @@
     "test:js": "cd ./test/js && npm run serve",
     "test:ts": "cd ./test/ts && npm run serve",
     "test-i:js": "cd ./test/js && npm install",
-    "test-i:ts": "cd ./test/ts && npm install",    
-    "test-build:js":"cd ./test/js && npm run build",
-    "test-build:ts":"cd ./test/ts && npm run build",
-    "test-g:js":"cd ./test/js && npm run generate",
-    "test-g:ts":"cd ./test/ts && npm run generate",
+    "test-i:ts": "cd ./test/ts && npm install",
+    "test-build:js": "cd ./test/js && npm run build",
+    "test-build:ts": "cd ./test/ts && npm run build",
+    "test-g:js": "cd ./test/js && npm run generate",
+    "test-g:ts": "cd ./test/ts && npm run generate",
+    "test-wifi-start": "apicloud wifiStart --port 23457",
+    "test-wifi-end": "apicloud wifiStop --port 23457",
+    "test-sync:js": "apicloud wifiSync --project ./test/js --updateAll true --port 23457",
+    "test-sync:ts": "apicloud wifiSync --project ./test/ts --updateAll true --port 23457",
     "test-i": "npm run test-i:ts",
     "test": "npm run test:ts",
-    "test-build":"npm run test-build:ts",
-    "test-g":"npm run test-g:ts"
+    "test-build": "npm run test-build:ts",
+    "test-g": "npm run test-g:ts",
+    "test-sync": "npm run test-sync:ts"
   },
   "dependencies": {
     "@types/js-base64": "^2.3.1",
@@ -37,6 +42,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",
+    "apicloud-cli": "^0.2.0",
     "eslint": "^6.8.0",
     "typescript": "^3.7.4"
   },
