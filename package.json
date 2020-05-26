@@ -16,9 +16,16 @@
     "prepublishOnly": "npm run build",
     "test:js": "cd ./test/js && npm run serve",
     "test:ts": "cd ./test/ts && npm run serve",
+    "test-i:js": "cd ./test/js && npm install",
+    "test-i:ts": "cd ./test/ts && npm install",    
+    "test-build:js":"cd ./test/js && npm run build",
+    "test-build:ts":"cd ./test/ts && npm run build",
+    "test-g:js":"cd ./test/js && npm run generate",
+    "test-g:ts":"cd ./test/ts && npm run generate",
+    "test-i": "npm run test-i:ts",
     "test": "npm run test:ts",
-    "install-test:js": "cd ./test/js && npm install",
-    "install-test:ts": "cd ./test/ts && npm install"
+    "test-build":"npm run test-build:ts",
+    "test-g":"npm run test-g:ts"
   },
   "dependencies": {
     "@types/js-base64": "^2.3.1",
