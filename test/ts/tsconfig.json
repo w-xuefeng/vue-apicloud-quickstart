@@ -19,8 +19,8 @@
       "@/*": [
         "src/*"
       ],
-      "vue-apicloud-quickstart": [
-        "../../src"
+      "vue-apicloud-quickstart/*": [
+        "../../src/*"
       ]
     },
     "lib": [

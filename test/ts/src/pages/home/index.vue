@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { VueAPICloud, APIEvent } from 'vue-apicloud-quickstart'
+import { VueAPICloud } from 'vue-apicloud-quickstart'
 import HelloWorld from '../../components/HelloWorld.vue'
 
 @VueAPICloud
@@ -49,10 +49,6 @@ export default class HomeIndex extends Vue {
   }
 
   onReady () {
-    this.$setStatusBarStyle({
-      color: 'transparent',
-      style: 'light'
-    })
     this.$bindKeyBackExitApp()
   }
 }

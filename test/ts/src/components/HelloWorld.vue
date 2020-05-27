@@ -18,7 +18,7 @@
     <h3>Ecosystem</h3>
     <ul>
       <li>
-        <a href="https://vaq.wangxuefeng.com.cn" target="_blank" rel="noopener">vue-apicloud-start</a>
+        <a href="https://vaq.wangxuefeng.com.cn" target="_blank" rel="noopener">vue-apicloud-quickstart</a>
       </li>
       <li>
         <a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a>

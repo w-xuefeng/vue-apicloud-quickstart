@@ -6,6 +6,7 @@
 
 export default {
   name: 'web',
+  statusBar: 'transparent',
   onReady () {
     const { url, name } = this.$page.pageParam()
     this.$frame.open({

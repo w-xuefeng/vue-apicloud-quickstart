@@ -150,6 +150,7 @@
 <script>
 export default {
   name: 'index',
+  statusBar: 'transparent',
   data () {
     return {
       timeout: 5,

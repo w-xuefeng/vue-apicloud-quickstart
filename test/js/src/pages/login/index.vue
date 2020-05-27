@@ -13,7 +13,11 @@
 
 <script>
 export default {
-  name: 'login',
+  name: 'login',  
+  statusBar: {
+    color: 'transparent',
+    style: 'light'
+  },
   data () {
     return {
       user: '',

@@ -1,2 +1,2 @@
-import 'vue-apicloud-quickstart/types/global'
-import 'vue-apicloud-quickstart/types/vue'
+import '../../../types/global'
+import '../../../types/vue'
