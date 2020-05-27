@@ -13,7 +13,7 @@
     "build": "tsc --build tsconfig.json",
     "lint": "eslint --fix -c .eslintrc.js --ext .js,.ts ./src",
     "prebuild": "npm run lint",
-    "prepublishOnly": "npm run build && npm run test:js",
+    "prepublishOnly": "npm run build",
     "test:js": "cd ./test/js && npm run serve",
     "test:ts": "cd ./test/ts && npm run serve",
     "test-i:js": "cd ./test/js && npm install",
