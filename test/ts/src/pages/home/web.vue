@@ -7,7 +7,12 @@ import { Component, Vue } from 'vue-property-decorator'
 import { VueAPICloud } from 'vue-apicloud-quickstart'
 
 @VueAPICloud
-@Component
+@Component({
+  statusBar: {
+    color: 'transparent',
+    style: 'dark'
+  }
+})
 export default class HomeWeb extends Vue {
   onReady () {
     const { url, name } = this.$page.pageParam()

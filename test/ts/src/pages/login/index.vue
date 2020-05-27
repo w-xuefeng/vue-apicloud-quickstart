@@ -16,7 +16,12 @@ import { Component, Vue } from 'vue-property-decorator'
 import { VueAPICloud } from 'vue-apicloud-quickstart'
 
 @VueAPICloud
-@Component
+@Component({
+  statusBar: {
+    color: 'transparent',
+    style: 'light'
+  }
+})
 export default class LoginIndex extends Vue {
   user = ''
   password = ''

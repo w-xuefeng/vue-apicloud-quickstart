@@ -1,5 +1,8 @@
 <template>
   <div class="home" @click="proxyClick">
+    <div class="header">
+      {{ title }}
+    </div>
     <img alt="Vue logo" src="res/img/logo.png" width="50%" />
     <HelloWorld msg="Welcome to Your Vue.js App with APICloud" />
     <div class="logout" @click="logout">退出登录</div>
@@ -8,16 +11,23 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { VueAPICloud } from 'vue-apicloud-quickstart'
-import HelloWorld from '@/components/HelloWorld.vue'
+import { VueAPICloud, APIEvent } from 'vue-apicloud-quickstart'
+import HelloWorld from '../../components/HelloWorld.vue'
 
 @VueAPICloud
 @Component({
   components: {
     HelloWorld
+  },
+  statusBar: {
+    color: 'transparent',
+    style: 'light'
   }
 })
 export default class HomeIndex extends Vue {
+  
+  title = 'Vue APICloud Quickstart'
+
   logout () {
     this.$api.rmStorage('userinfo')
     this.$page.push({ name: 'login' })
@@ -39,6 +49,10 @@ export default class HomeIndex extends Vue {
   }
 
   onReady () {
+    this.$setStatusBarStyle({
+      color: 'transparent',
+      style: 'light'
+    })
     this.$bindKeyBackExitApp()
   }
 }
@@ -51,7 +65,7 @@ export default class HomeIndex extends Vue {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 100px;
 }
 .home img {
   max-width: 300px;
@@ -66,5 +80,18 @@ export default class HomeIndex extends Vue {
   border: 1px solid #f32121;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+}
+.home .header {
+  width: 100%;
+  padding: 20px 10px 0 10px;
+  height: 60px;
+  background-color: #42b983;
+  color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.45) 1px 1px 5px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
 }
 </style>

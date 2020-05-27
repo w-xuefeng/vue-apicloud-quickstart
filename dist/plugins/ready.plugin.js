@@ -68,9 +68,13 @@ var install = function (Vue, options) {
                         }
                     };
                     var _a = (_self.$data || {}).$apiEventOptions, $apiEventOptions = _a === void 0 ? {} : _a;
+                    var statusBar = vmOptions.statusBar || {};
                     if ('apiEvent' in vmOptions) {
                         var apiEvent = vmOptions.apiEvent;
                         addAPIEventListener(apiEvent);
+                    }
+                    if (typeof statusBar === 'string' && statusBar || typeof statusBar === 'object' && statusBar.color) {
+                        addAPIEventListener({ viewappear: function () { return _this.$setStatusBarStyle(statusBar); } });
                     }
                     if (Object.keys($apiEventOptions).length > 0) {
                         addAPIEventListener($apiEventOptions);
