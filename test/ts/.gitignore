@@ -1,5 +1,8 @@
 .DS_Store
 node_modules
+/dist
+/widget
+widget.zip
 
 # local env files
 .env.local
@@ -18,5 +21,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# lock files
 package-lock.json
 yarn.lock
