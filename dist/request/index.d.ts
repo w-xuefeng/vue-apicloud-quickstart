@@ -79,7 +79,7 @@ export declare class NetworkRequest {
      * }
      */
     request(opts: RequestConfig): Promise<unknown>;
-    get(url: string): Promise<unknown>;
+    get(url: string, data?: Record<string, any>): Promise<unknown>;
     post(url: string, data: any, headers?: any): Promise<unknown>;
     setBaseUrl(url: string): void;
     setTag(tag: string): void;
