@@ -35,7 +35,7 @@ English | [简体中文](./README_zh.md)
 ## Usage
 
 - In the `main.js`, you can configure options of `plugin` including `pages` and `debugOnPC`
-- Chaining the `init` method will create a` Vue` instance and ensure that it executes after `apiready`, returning` Promise <CombinedVueInstance <Vue, object, object, object, object >> `
+- Chaining the `init` method will create a` Vue` instance and ensure that it executes after `apiready`, returning` Promise<CombinedVueInstance<Vue, object, object, object, object>> `
 
   ```js
   import App from './App.vue'
