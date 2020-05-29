@@ -16,7 +16,9 @@
 
 ## [查看文档](https://vaq.wangxuefeng.com.cn/zh/)
 
-## 使用方法
+## 安装
+
+- 说明：本项目已支持 `typescript`， 创建 `Vue` 项目时选择 `typescript` 即可
 
 - 本项目以 [w-xuefeng/vue-cli-plugin-apicloud](https://github.com/w-xuefeng/vue-cli-plugin-apicloud) 作为基础, 运行以下命令即可
 
@@ -31,11 +33,10 @@
   $ vue invoke @w-xuefeng/apicloud
   ```
 
-## 说明
-
-- 已支持 `Typescript`
+## 使用方法
 
 - 在 `main.js` 中，可以配置 `plugin` 的参数，其中包括 `pages` 和 `debugOnPC`
+- 链式调用 `init` 方法将创建 `Vue` 实例，并确保在 `apiready` 后执行，返回 `Promise<CombinedVueInstance<Vue, object, object, object, object>>`
 
   ```js
   import App from './App.vue'
@@ -55,6 +56,8 @@
       render: h => h(App)
     })
   ```
+
+## 配置项
 
 - 1 `pages`: 页面配置
 

@@ -14,7 +14,9 @@ English | [简体中文](./README_zh.md)
 
 ## [Documentation](https://vaq.wangxuefeng.com.cn)
 
-## Usage
+## Install
+
+- Description: This project already supports `typescript`, just select` typescript` when creating a `Vue` project
 
 - This project is based on [w-xuefeng/vue-cli-plugin-apicloud](https://github.com/w-xuefeng/vue-cli-plugin-apicloud), run the following command to install
 
@@ -30,11 +32,10 @@ English | [简体中文](./README_zh.md)
   ```
 
 
-## Explanation
-
-- `Typescript` Supported
+## Usage
 
 - In the `main.js`, you can configure options of `plugin` including `pages` and `debugOnPC`
+- Chaining the `init` method will create a` Vue` instance and ensure that it executes after `apiready`, returning` Promise <CombinedVueInstance <Vue, object, object, object, object >> `
 
   ```js
   import App from './App.vue'
@@ -54,6 +55,8 @@ English | [简体中文](./README_zh.md)
       render: h => h(App)
     })
   ```
+
+## Options
 
 - 1 `pages`: Page configuration
 
