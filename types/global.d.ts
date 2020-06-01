@@ -7,3 +7,8 @@ interface Window {
   $api: any;
   apiready: () => any;
 }
+
+interface HTMLElement {
+  getRect: DOMRect;
+  computedStyle: CSSStyleDeclaration;
+}
