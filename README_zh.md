@@ -16,6 +16,8 @@
 
 ## [查看文档](https://vaq.wangxuefeng.com.cn/zh/)
 
+- 文档地址：https://vaq.wangxuefeng.com.cn/zh/
+
 ## 安装
 
 - 说明：本项目已支持 `typescript`， 创建 `Vue` 项目时选择 `typescript` 即可
@@ -138,3 +140,6 @@
 - [vuejs/vue-cli](https://github.com/vuejs/vue-cli)
 - [app-case-community/vue-cli-plugin-apicloud](https://github.com/app-case-community/vue-cli-plugin-apicloud)
   
+## 学习交流群
+
+<img src="./assets/qrcode.jpg" width="250" alt="学习交流群">

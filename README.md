@@ -14,6 +14,8 @@ English | [简体中文](./README_zh.md)
 
 ## [Documentation](https://vaq.wangxuefeng.com.cn)
 
+- Docs address：https://vaq.wangxuefeng.com.cn
+
 ## Install
 
 - Description: This project already supports `typescript`, just select` typescript` when creating a `Vue` project
