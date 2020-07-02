@@ -51,7 +51,7 @@
   Vue
     .use(VAQ, {
       pages,
-      // debugOnPC: process.env.NODE_ENV !== 'production '
+      // debugOnPC: process.env.NODE_ENV !== 'production'
     })
     .init({
       el: '#app',
