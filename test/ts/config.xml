@@ -1,4 +1,4 @@
-<widget id="A6020064376443"  version="0.0.1">
+<widget id="A6071859749007"  version="0.0.1">
 	<name>vue-apicloud-template</name>
 	<description>
 		A Vue.js APP with APICloud
@@ -19,6 +19,7 @@
 	<preference name="autoUpdate" value="true" />
 	<preference name="smartUpdate" value="false" />
 	<preference name="debug" value="true"/>
+	<preference name="backgroundMode" value="audio"/>
 	<preference name="statusBarAppearance" value="true"/>
 	<permission name="readPhoneState" />
 	<permission name="camera" />

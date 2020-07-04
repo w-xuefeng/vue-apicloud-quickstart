@@ -376,4 +376,10 @@ body {
     transition: all 300ms;
   }
 }
+
+@media screen and (max-height: 450px) {
+  .app-loading {
+    transform: translateY(40px);
+  }
+}
 </style>

@@ -109,7 +109,9 @@ var NetworkRequest = /** @class */ (function () {
         this.tag = opts.tag || this.tag || "ajax-" + new Date().getTime();
         this.requestOptions = __assign(__assign(__assign({}, this.requestOptions), opts), { tag: this.tag, url: isHttpUrl(opts.url) ? opts.url : "" + this.baseUrl + opts.url, data: {
                 values: opts.data,
-                files: opts.files
+                files: opts.files,
+                stream: opts.stream,
+                body: opts.body,
             } });
         if (typeof api !== "undefined") {
             var isContinue_1 = this.interceptor(this.requestOptions);
@@ -138,7 +140,7 @@ var NetworkRequest = /** @class */ (function () {
                 method: this.requestOptions.method,
                 baseURL: this.baseUrl,
                 headers: this.requestOptions.headers,
-                data: this.requestOptions.data.values,
+                data: this.requestOptions.data.values || this.requestOptions.data.body,
                 /**
                  * 超时时间
                  * 单位：毫秒
@@ -161,7 +163,12 @@ var NetworkRequest = /** @class */ (function () {
             });
         }
     };
-    NetworkRequest.prototype.get = function (url) {
+    NetworkRequest.prototype.get = function (url, data) {
+        if (data) {
+            var params = Object.keys(data).reduce(function (t, k, ci, arr) { return "" + t + (data[k] ? k + "=" + data[k] + (ci === arr.length - 1 ? '' : '&') : ''); }, '');
+            params = ['&', '='].includes(params[params.length - 1]) ? params.substring(0, params.length - 1) : params;
+            url = url + "?" + params;
+        }
         return this.request({ url: url });
     };
     NetworkRequest.prototype.post = function (url, data, headers) {

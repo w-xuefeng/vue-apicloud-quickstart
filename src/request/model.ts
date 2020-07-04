@@ -1,6 +1,21 @@
 export interface RequestConfig {
   url: string;
+  /**
+   * 以表单方式提交参数（JSON对象）, 如 {"field1": "value1", "field1": "value2"} (直接传JSON对像.)
+   */
   data?: any;
+  /**
+   * 以纯文本的方式提交数据，body支持字符串及JSON对象（若要校验数据完整性，需将JSON对象转换成字符串再传入）。提交JSON对象时，需设置application/json类型的Content-Type头
+   */
+  body?: Record<string, any> | string;
+  /**
+   * 以表单方式提交文件，支持多文件上传（JSON对象）,如 {"file": "path"}，也支持同一字段对应多文件：{"file":["path1","path2"]}。文件路径，支持绝对路径，以及fs://、cache://、box://等文件路径协议。可直接使用其他端API返回的结果，如api.getPicture回调的ret.data等.
+   */
+  files?: Record<string, string | string[]>;
+  /**
+   * 以二进制流的方式提交文件。stream为文件路径（字符串类型），支持绝对路径，以及fs://、cache://、box://等文件路径协议。可直接使用其他端API返回的结果，如api.getPicture回调的ret.data等
+   */
+  stream?: string;
   method?: 'get'| 'post'| 'put'| 'delete'| 'head'| 'options'| 'patch';
   /**
    * 超时时间

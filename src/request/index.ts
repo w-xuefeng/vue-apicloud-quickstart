@@ -116,7 +116,9 @@ export class NetworkRequest {
       url: isHttpUrl(opts.url) ? opts.url : `${this.baseUrl}${opts.url}`,
       data: {
         values: opts.data,
-        files: opts.files
+        files: opts.files,
+        stream: opts.stream,
+        body: opts.body,
       }
     }
     if (typeof api !== "undefined") {
@@ -144,7 +146,7 @@ export class NetworkRequest {
         method: this.requestOptions.method,
         baseURL: this.baseUrl,
         headers: this.requestOptions.headers,
-        data: this.requestOptions.data.values,
+        data: this.requestOptions.data.values || this.requestOptions.data.body,
         /**
          * 超时时间
          * 单位：毫秒
@@ -169,7 +171,12 @@ export class NetworkRequest {
     }
   }
 
-  get(url: string) {
+  get(url: string, data?: Record<string, any>) {
+    if (data) {
+      let params = Object.keys(data).reduce((t, k, ci, arr) => `${t}${data[k] ? `${k}=${data[k]}${ci === arr.length - 1 ? '' : '&'}` : ''}`, '')
+      params = ['&', '='].includes(params[params.length - 1]) ? params.substring(0, params.length - 1) : params
+      url = `${url}?${params}`
+    }
     return this.request({ url })
   }
 
