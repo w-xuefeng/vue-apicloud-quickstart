@@ -11,4 +11,5 @@ export declare const catchApiError: (fn: Function, msg?: {
 export declare const bringFunc: (funcName: string | string[], from: Record<string, Function>, to: Record<string, any>) => {
     [x: string]: any;
 };
+export declare const isHttpUrl: (url: string) => boolean;
 export default helpFunc;

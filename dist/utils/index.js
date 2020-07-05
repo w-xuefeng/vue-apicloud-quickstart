@@ -53,4 +53,7 @@ exports.bringFunc = function (funcName, from, to) {
     }
     return res;
 };
+exports.isHttpUrl = function (url) {
+    return ['https://', 'http://', '//'].some(function (e) { return url.startsWith(e); });
+};
 exports.default = helpFunc_1.default;

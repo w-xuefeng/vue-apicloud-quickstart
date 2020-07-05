@@ -1,11 +1,16 @@
-import { RequestConfig, ResponseError, ResponseType } from './model'
-import axios, { CancelTokenSource } from 'axios'
-import BaseRequest from './BaseRequest'
+import RequestBase, {
+  RequestConfigAPICloud,
+  RequestConfig,
+  ResponseError,
+  ResponseType,
+} from './model'
+import axios, { CancelTokenSource, AxiosRequestConfig } from 'axios'
+import { isHttpUrl } from '../utils'
 
-export class NetworkRequest implements BaseRequest {
-  private baseUrl = '';
-  private tag: string | CancelTokenSource = '' ;
-  public requestOptions: RequestConfig;
+class NetworkRequest implements RequestBase {
+  private baseUrl = ''
+  private tag: string | CancelTokenSource = ''
+  public requestOptions: RequestConfig | RequestConfigAPICloud
 
   constructor(opts?: RequestConfig) {
     this.requestOptions = {
@@ -19,10 +24,10 @@ export class NetworkRequest implements BaseRequest {
       report: false,
       cache: false,
       safeMode: 'none',
-      ...opts
+      ...opts,
     }
   }
-  
+
   interceptor(opts: RequestConfig) {
     return !!opts
   }
@@ -32,79 +37,80 @@ export class NetworkRequest implements BaseRequest {
   }
 
   handleError(err: ResponseError): void {
-    if (err) {}
-  }
-
-  readyForRequest(opts: RequestConfig): void {
-    const isHttpUrl = (url: string): boolean =>
-      ['https://', 'http://', '//'].some((e) => url.startsWith(e))
-    this.tag = opts.tag || this.tag || `ajax-${new Date().getTime()}`
-    this.requestOptions = {
-      ...this.requestOptions,
-      ...opts,
-      tag: this.tag,
-      url: isHttpUrl(opts.url) ? opts.url : `${this.baseUrl}${opts.url}`,
-      data: {
-        values: opts.data,
-        files: opts.files,
-        stream: opts.stream,
-        body: opts.body,
-      },
+    if (err) {
     }
   }
 
-  requestForClient() {
-    const isContinue = this.interceptor(this.requestOptions)
-    if (!isContinue) {
-      return new Promise<any>((resolve, reject) =>
-        reject('The request is intercepted by interceptor')
-      )
-    }      
-    return new Promise<ResponseType>((resolve, reject) => {
-      window.api.ajax(
-        this.requestOptions,
-        (ret: ResponseType, err: ResponseError) => {
-          if (ret) {
-            return resolve(this.afterRequest(ret))
-          } else {
-            return reject(err)
-          }
-        }
-      )
+  readyForRequest(opts: RequestConfig) {
+    return new Promise<RequestConfigAPICloud>((resolve) => {
+      this.tag = opts.tag || this.tag || `ajax-${new Date().getTime()}`
+      this.requestOptions = {
+        ...this.requestOptions,
+        ...opts,
+        tag: this.tag,
+        url: isHttpUrl(opts.url) ? opts.url : `${this.baseUrl}${opts.url}`,
+        data: {
+          values: opts.data,
+          files: opts.files,
+          stream: opts.stream,
+          body: opts.body,
+        },
+      }
+      resolve(this.requestOptions as RequestConfigAPICloud)
     })
   }
 
-  requestForBrower() {
-    this.tag = typeof this.tag === 'string' ? axios.CancelToken.source() : this.tag
-    this.requestOptions.tag = this.tag
-    const isContinue = this.interceptor(this.requestOptions)
+  requestForClient(opts: RequestConfigAPICloud) {
+    const isContinue = this.interceptor(opts)
     if (!isContinue) {
       return new Promise<any>((resolve, reject) =>
         reject('The request is intercepted by interceptor')
       )
     }
-    const axiosRequestConfig = {
-      url: this.requestOptions.url,
-      method: this.requestOptions.method,
+    return new Promise<ResponseType>((resolve, reject) => {
+      window.api.ajax(opts, (ret: ResponseType, err: ResponseError) => {
+        if (ret) {
+          return resolve(this.afterRequest(ret))
+        } else {
+          return reject(err)
+        }
+      })
+    })
+  }
+
+  requestForBrower(opts: RequestConfigAPICloud) {
+    this.tag =
+      typeof this.tag === 'string' ? axios.CancelToken.source() : this.tag
+    this.requestOptions.tag = this.tag
+    const isContinue = this.interceptor(opts)
+    if (!isContinue) {
+      return new Promise<any>((resolve, reject) =>
+        reject('The request is intercepted by interceptor')
+      )
+    }
+    const axiosRequestConfig: AxiosRequestConfig = {
+      url: opts.url,
+      method: opts.method,
       baseURL: this.baseUrl,
-      headers: this.requestOptions.headers,
-      data: this.requestOptions.data.values || this.requestOptions.data.body,
-      timeout: (this.requestOptions.timeout || 30) * 1000,        
-      proxy: this.requestOptions.proxy,
-      cancelToken: (this.tag as CancelTokenSource).token
+      headers: opts.headers,
+      data: (opts.data && (opts.data.values || opts.data.body)),
+      timeout: (opts.timeout || 30) * 1000,
+      proxy: opts.proxy,
+      cancelToken: (this.tag as CancelTokenSource).token,
     }
     return axios
       .request(axiosRequestConfig)
-      .then(rs => this.afterRequest(rs.data))
+      .then((rs) => this.afterRequest(rs.data))
   }
 
   request(opts: RequestConfig) {
-    this.readyForRequest(opts)
-    return (
-      typeof api !== 'undefined'
-      ? this.requestForClient()
-      : this.requestForBrower()
-    ).catch(err => this.handleError(err))
+    return this.readyForRequest(opts)
+      .then((requestOptions) =>
+        typeof api !== 'undefined'
+          ? this.requestForClient(requestOptions)
+          : this.requestForBrower(requestOptions)
+      )
+      .catch((err) => this.handleError(err))
   }
 
   get(url: string, data?: Record<string, string | number | boolean>) {
@@ -142,9 +148,10 @@ export class NetworkRequest implements BaseRequest {
     if (typeof api !== 'undefined') {
       window.api.cancelAjax({ tag })
     } else {
-      (this.tag as CancelTokenSource).cancel(msg)
+      ;(this.tag as CancelTokenSource).cancel(msg)
     }
   }
 }
 
+export { NetworkRequest }
 export default new NetworkRequest()

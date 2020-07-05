@@ -49,4 +49,7 @@ export const bringFunc = (
   return res
 }
 
+export const isHttpUrl = (url: string): boolean =>
+  ['https://', 'http://', '//'].some((e) => url.startsWith(e))
+
 export default helpFunc

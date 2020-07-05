@@ -15,6 +15,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __importDefault(require("axios"));
+var utils_1 = require("../utils");
 var NetworkRequest = /** @class */ (function () {
     function NetworkRequest(opts) {
         this.baseUrl = '';
@@ -28,30 +29,32 @@ var NetworkRequest = /** @class */ (function () {
         return ret;
     };
     NetworkRequest.prototype.handleError = function (err) {
-        if (err) { }
+        if (err) {
+        }
     };
     NetworkRequest.prototype.readyForRequest = function (opts) {
-        var isHttpUrl = function (url) {
-            return ['https://', 'http://', '//'].some(function (e) { return url.startsWith(e); });
-        };
-        this.tag = opts.tag || this.tag || "ajax-" + new Date().getTime();
-        this.requestOptions = __assign(__assign(__assign({}, this.requestOptions), opts), { tag: this.tag, url: isHttpUrl(opts.url) ? opts.url : "" + this.baseUrl + opts.url, data: {
-                values: opts.data,
-                files: opts.files,
-                stream: opts.stream,
-                body: opts.body,
-            } });
-    };
-    NetworkRequest.prototype.requestForClient = function () {
         var _this = this;
-        var isContinue = this.interceptor(this.requestOptions);
+        return new Promise(function (resolve) {
+            _this.tag = opts.tag || _this.tag || "ajax-" + new Date().getTime();
+            _this.requestOptions = __assign(__assign(__assign({}, _this.requestOptions), opts), { tag: _this.tag, url: utils_1.isHttpUrl(opts.url) ? opts.url : "" + _this.baseUrl + opts.url, data: {
+                    values: opts.data,
+                    files: opts.files,
+                    stream: opts.stream,
+                    body: opts.body,
+                } });
+            resolve(_this.requestOptions);
+        });
+    };
+    NetworkRequest.prototype.requestForClient = function (opts) {
+        var _this = this;
+        var isContinue = this.interceptor(opts);
         if (!isContinue) {
             return new Promise(function (resolve, reject) {
                 return reject('The request is intercepted by interceptor');
             });
         }
         return new Promise(function (resolve, reject) {
-            window.api.ajax(_this.requestOptions, function (ret, err) {
+            window.api.ajax(opts, function (ret, err) {
                 if (ret) {
                     return resolve(_this.afterRequest(ret));
                 }
@@ -61,25 +64,26 @@ var NetworkRequest = /** @class */ (function () {
             });
         });
     };
-    NetworkRequest.prototype.requestForBrower = function () {
+    NetworkRequest.prototype.requestForBrower = function (opts) {
         var _this = this;
-        this.tag = typeof this.tag === 'string' ? axios_1.default.CancelToken.source() : this.tag;
+        this.tag =
+            typeof this.tag === 'string' ? axios_1.default.CancelToken.source() : this.tag;
         this.requestOptions.tag = this.tag;
-        var isContinue = this.interceptor(this.requestOptions);
+        var isContinue = this.interceptor(opts);
         if (!isContinue) {
             return new Promise(function (resolve, reject) {
                 return reject('The request is intercepted by interceptor');
             });
         }
         var axiosRequestConfig = {
-            url: this.requestOptions.url,
-            method: this.requestOptions.method,
+            url: opts.url,
+            method: opts.method,
             baseURL: this.baseUrl,
-            headers: this.requestOptions.headers,
-            data: this.requestOptions.data.values || this.requestOptions.data.body,
-            timeout: (this.requestOptions.timeout || 30) * 1000,
-            proxy: this.requestOptions.proxy,
-            cancelToken: this.tag.token
+            headers: opts.headers,
+            data: (opts.data && (opts.data.values || opts.data.body)),
+            timeout: (opts.timeout || 30) * 1000,
+            proxy: opts.proxy,
+            cancelToken: this.tag.token,
         };
         return axios_1.default
             .request(axiosRequestConfig)
@@ -87,10 +91,13 @@ var NetworkRequest = /** @class */ (function () {
     };
     NetworkRequest.prototype.request = function (opts) {
         var _this = this;
-        this.readyForRequest(opts);
-        return (typeof api !== 'undefined'
-            ? this.requestForClient()
-            : this.requestForBrower()).catch(function (err) { return _this.handleError(err); });
+        return this.readyForRequest(opts)
+            .then(function (requestOptions) {
+            return typeof api !== 'undefined'
+                ? _this.requestForClient(requestOptions)
+                : _this.requestForBrower(requestOptions);
+        })
+            .catch(function (err) { return _this.handleError(err); });
     };
     NetworkRequest.prototype.get = function (url, data) {
         if (data) {
@@ -124,6 +131,7 @@ var NetworkRequest = /** @class */ (function () {
             window.api.cancelAjax({ tag: tag });
         }
         else {
+            ;
             this.tag.cancel(msg);
         }
     };
